@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Virat Kohli — The Run Machine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+  <meta name="description" content="A small portfolio-style site celebrating Virat Kohli and his cricketing achievements." />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="#">VIRAT</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+    </nav>
+    <div class="hero container">
+      <div class="hero-left">
+        <h1>Virat Kohli</h1>
+        <p class="tagline">The Run Machine — Records, Awards & Moments</p>
+        <p class="lead">One of modern cricket's most prolific batsmen. Here's a curated look at his milestones and achievements.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#achievements">See Achievements</a>
+          <a class="btn btn-ghost" href="#stats">View Stats</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="card-glow">
+          <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=29e4b3f4f8f6ff9480b3bb7b78ff5f95" alt="Virat Kohli" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="container about">
+      <h2>About</h2>
+      <div class="about-grid">
+        <p>Virat Kohli is an Indian international cricketer and former captain of the India national team. Known for his aggressive batting, keen fitness and consistency across formats, Kohli has set and broken numerous records in international cricket.</p>
+        <ul>
+          <li><strong>Born:</strong> 5 November 1988</li>
+          <li><strong>Role:</strong> Top-order batsman</li>
+          <li><strong>Batting:</strong> Right-hand bat</li>
+          <li><strong>International Debut:</strong> 2008 (ODI)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="achievements" class="container achievements">
+      <h2>Achievements & Milestones</h2>
+      <div class="timeline">
+        <article class="event">
+          <div class="event-year">2012</div>
+          <div class="event-body">
+            <h3>ICC ODI Player of the Year (2012)</h3>
+            <p>Won the ICC ODI Player of the Year award in recognition of an outstanding year with the bat.</p>
+          </div>
+        </article>
+
+        <article class="event alternate">
+          <div class="event-year">2016</div>
+          <div class="event-body">
+            <h3>Fastest to 8,000, 9,000 & 10,000 ODI runs</h3>
+            <p>Set records for fastest accumulation of ODI runs across milestones, showcasing consistency and domination.</p>
+          </div>
+        </article>
+
+        <article class="event">
+          <div class="event-year">2017-2018</div>
+          <div class="event-body">
+            <h3>International Centuries & Records</h3>
+            <p>Multiple centuries across formats, including chase-master displays and match-winning knocks.</p>
+          </div>
+        </article>
+
+        <article class="event alternate">
+          <div class="event-year">2018</div>
+          <div class="event-body">
+            <h3>Sir Garfield Sobers Trophy (2017)</h3>
+            <p>Awarded one of the highest honors as ICC Cricketer of the Year for performances across formats.</p>
+          </div>
+        </article>
+
+        <article class="event">
+          <div class="event-year">2021</div>
+          <div class="event-body">
+            <h3>Exemplary Leadership & Fitness</h3>
+            <p>Recognised for leadership on and off the field, and for raising fitness standards in international cricket.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="stats" class="container stats">
+      <h2>Career Stats (selected)</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" data-target="254" id="odi-runs">0</div>
+          <div class="stat-label">ODI Matches (approx)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" data-target="75" id="odi-centuries">0</div>
+          <div class="stat-label">International centuries</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" data-target="70" id="test-centuries">0</div>
+          <div class="stat-label">Test centuries</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" data-target="13000" id="total-runs">0</div>
+          <div class="stat-label">Approx. International runs</div>
+        </div>
+      </div>
+      <p class="note">Numbers here are illustrative — replace with up-to-date stats if you want live accuracy.</p>
+    </section>
+
+    <section id="gallery" class="container gallery">
+      <h2>Gallery & Moments</h2>
+      <div class="gallery-grid">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1508606572321-901ea443707f?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=1c3d5da2b7f2d1b5e7b6b6b4c2f4d4f3" alt="Kohli action">
+          <figcaption>Signature cover drive</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=6f5d5c4f2d3c4b5a6d7e7f6a5b4c3d2e" alt="Kohli celebration">
+          <figcaption>Celebration after a big win</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=9e7ab6ecb4dee2a9b4e2f7f3c0d6c6e7" alt="Kohli portrait">
+          <figcaption>On the cover</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <p>&copy; <span id="year"></span> VIRAT-18 — Built with ❤️</p>
+      <p class="small">Data and images are for demonstration. Update sources and credits as needed.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
