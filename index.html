@@ -3,205 +3,176 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Virat Kohli — The Run Machine</title>
-  <meta name="description" content="A fan site showcasing Virat Kohli's career, stats, achievements and highlights. Built for static deployment on Vercel." />
-  <meta name="theme-color" content="#08306b">
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/styles.css">
+  <title>Virat Kohli — Futuristic Profile</title>
+  <meta name="description" content="A futuristic portfolio-style site focused on Virat Kohli and his cricket achievements." />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-
-  <aside class="sidebar glass-card" aria-label="Primary">
+  <aside class="sidebar" aria-label="Primary navigation">
     <div class="logo">VIRAT</div>
-    <nav class="side-nav" aria-label="Main navigation">
-      <a href="#hero" class="active" aria-label="Home">🏏</a>
-      <a href="#stats" aria-label="Stats">📊</a>
-      <a href="#achievements" aria-label="Achievements">🏆</a>
-      <a href="#gallery" aria-label="Gallery">🖼️</a>
+    <nav class="side-nav" aria-label="Sections">
+      <a href="#hero" class="active" title="Home">🏟️</a>
+      <a href="#about" title="About">🧾</a>
+      <a href="#achievements" title="Achievements">🏆</a>
+      <a href="#stats" title="Stats">📊</a>
+      <a href="#gallery" title="Gallery">📷</a>
+      <a href="#contact" title="Contact">✉️</a>
     </nav>
     <div class="sidebar-footer">
-      <button id="theme-toggle" aria-pressed="false" title="Toggle theme">🌗</button>
+      <button id="themeToggle" aria-label="Toggle theme">🌙</button>
     </div>
   </aside>
 
-  <main id="main">
-    <section id="hero" class="hero container">
-      <div class="hero-inner">
-        <div class="hero-left">
-          <p class="eyebrow">Cricket • International • Legend</p>
-          <h1>Virat Kohli</h1>
-          <p class="lead">One of the greatest modern batsmen — aggressive, consistent, and a relentless run-scoring machine. A journey through records, milestones and moments that define his career and inspire millions around the world.</p>
+  <header id="hero" class="hero">
+    <div class="hero-inner container">
+      <div class="hero-left">
+        <p class="eyebrow">THE RUN MACHINE</p>
+        <h1>Virat Kohli</h1>
+        <p class="lead">A futuristic showcase of Virat Kohli — records, milestones and the relentless chase for runs.</p>
+        <div class="cta">
+          <a class="btn primary" href="#achievements">View Achievements</a>
+          <a class="btn ghost" href="#stats">See Stats</a>
+        </div>
+      </div>
 
-          <div class="cta">
-            <a class="btn primary" href="#achievements">Explore Achievements</a>
-            <a class="btn ghost" href="#gallery">See Gallery</a>
+      <div class="hero-right">
+        <div class="hero-card glass-card">
+          <svg class="cricket-ball" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#ff3b3b"/>
+                <stop offset="1" stop-color="#ff9a3d"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="44" fill="url(#g1)" />
+            <path d="M18 45c10 8 20 8 32 0" stroke="#fff" stroke-width="2" fill="none"/>
+            <path d="M82 55c-10 -8 -20 -8 -32 0" stroke="#fff" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="card-copy">
+            <h3>Cricket, Not Just a Game</h3>
+            <p>Match-winning innings, records and honors. Replace images with licensed player photos when publishing.</p>
           </div>
-
-          <div class="small-note">Built with ❤️ — replace images with high-resolution assets for production.</div>
-        </div>
-
-        <div class="hero-right">
-          <figure class="hero-card glass-card">
-            <img class="cricket-ball" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=36f5b31d6f9f9ab3ffb6fc2a2c3b8d8e" alt="Virat Kohli portrait" />
-            <figcaption class="card-copy">
-              <h3>Virat Kohli</h3>
-              <p class="kicker">Captain, Run-machine, Champion</p>
-            </figcaption>
-          </figure>
-        </div>
-
-        <div class="hero-bg" aria-hidden="true"></div>
-      </div>
-    </section>
-
-    <section id="stats" class="section container">
-      <h2>Career Stats</h2>
-      <div class="grid-stats">
-        <div class="stat">
-          <div class="num">+26,000</div>
-          <div class="label">Runs (All formats)</div>
-          <div class="small-note">Consistent across formats and years</div>
-        </div>
-        <div class="stat">
-          <div class="num">+70</div>
-          <div class="label">International Centuries</div>
-          <div class="small-note">Test & ODI</div>
-        </div>
-        <div class="stat">
-          <div class="num">96</div>
-          <div class="label">ODI average</div>
-          <div class="small-note">Among highest for modern era</div>
-        </div>
-        <div class="stat">
-          <div class="num">2008–2024</div>
-          <div class="label">International span</div>
-          <div class="small-note">Still going strong</div>
         </div>
       </div>
-    </section>
+    </div>
+    <div class="hero-bg" aria-hidden="true"></div>
+  </header>
 
-    <section id="achievements" class="section container">
-      <h2>Achievements & Milestones</h2>
+  <main>
+    <section id="about" class="container section section-about">
       <div class="section-grid">
-        <div class="info-panel">
-          <div>
-            <strong>ICC Player of the Year</strong>
-            <span>2017</span>
-          </div>
-          <div>
-            <strong>ICC ODI Player of the Year</strong>
-            <span>2012, 2017</span>
-          </div>
-          <div>
-            <strong>Multiple National Awards</strong>
-            <span>Padma Shri, Khel Ratna nominee</span>
-          </div>
-          <div>
-            <strong>Fastest to 8,000 ODI runs</strong>
-            <span>Record-setting pace</span>
-          </div>
+        <div class="section-copy">
+          <h2>About</h2>
+          <p>Virat Kohli is an Indian international cricketer known for intensity, technique and extraordinary chasing. This page highlights major feats, statistics and memorable moments.</p>
         </div>
 
         <aside class="info-panel">
-          <h3>Notable Traits</h3>
-          <ul>
-            <li>Relentless chasing ability</li>
-            <li>Top-order consistency</li>
-            <li>Strong leadership & fitness culture</li>
-          </ul>
+          <div><strong>Born</strong><span>5 Nov 1988</span></div>
+          <div><strong>Role</strong><span>Top-order batter</span></div>
+          <div><strong>Batting</strong><span>Right-hand</span></div>
+          <div><strong>Teams</strong><span>India • RCB</span></div>
         </aside>
       </div>
+    </section>
 
+    <section id="achievements" class="container section">
+      <h2>Achievements</h2>
       <div class="timeline">
-        <article class="event">
-          <div class="date">2008</div>
-          <div class="event-body">
-            <h3>International Debut</h3>
-            <p>Made ODI debut and began ascent as India's premier batsman.</p>
-          </div>
-        </article>
-
         <article class="event">
           <div class="date">2011</div>
           <div class="event-body">
-            <h3>Key World Cup Role</h3>
-            <p>Integral member of India’s World Cup campaign.</p>
+            <h3>ICC World Cup Winner</h3>
+            <p>Part of the champion squad with memorable performances across the tournament.</p>
           </div>
         </article>
 
         <article class="event">
-          <div class="date">2018–2019</div>
+          <div class="date">2017</div>
           <div class="event-body">
-            <h3>Conversion to Test Greatness</h3>
-            <p>Dominant in Test cricket with multiple match-winning centuries.</p>
+            <h3>ICC Cricketer of the Year</h3>
+            <p>Awarded the Sir Garfield Sobers Trophy for outstanding all-format play.</p>
           </div>
         </article>
 
         <article class="event">
-          <div class="date">2021</div>
+          <div class="date">2018</div>
           <div class="event-body">
-            <h3>Consistency reborn</h3>
-            <p>Returned to form with prolific run-scoring across formats.</p>
+            <h3>Fastest to 10,000 ODI Runs</h3>
+            <p>Reached the milestone in fewer innings than any other player at the time.</p>
           </div>
         </article>
       </div>
 
-    </section>
-
-    <section id="gallery" class="section container">
-      <h2>Gallery</h2>
-      <div class="gallery">
-        <figure class="gallery-item" tabindex="0">
-          <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=80" alt="Cricket batsman in action" loading="lazy" data-caption="Cricket in full flow" />
-          <figcaption>Cricket action</figcaption>
-        </figure>
-
-        <figure class="gallery-item" tabindex="0">
-          <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=80" alt="Cricket player holding a bat" loading="lazy" data-caption="Batting focus" />
-          <figcaption>Batting focus</figcaption>
-        </figure>
-
-        <figure class="gallery-item" tabindex="0">
-          <img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=1200&q=80" alt="Cricket stadium and match scene" loading="lazy" data-caption="Stadium atmosphere" />
-          <figcaption>Match day</figcaption>
-        </figure>
-
-        <figure class="gallery-item" tabindex="0">
-          <img src="https://images.unsplash.com/photo-1600269452121-4f2416e55c28?auto=format&fit=crop&w=1200&q=80" alt="Cricket ball and pitch detail" loading="lazy" data-caption="Pitch and power" />
-          <figcaption>Pitch detail</figcaption>
-        </figure>
-      </div>
-
-      <div class="lightbox" id="lightbox" aria-hidden="true">
-        <button id="lightbox-close" aria-label="Close">✕</button>
-        <img id="lightbox-img" src="" alt="" />
-        <div id="lightbox-caption" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section class="section container">
-      <h2>Awards & Honors</h2>
       <div class="award-list">
-        <h3>Selected</h3>
+        <h3>Selected Honors</h3>
         <ul>
           <li>Multiple ICC awards</li>
-          <li>Recognized as one of world's top athletes</li>
-          <li>National honors for sporting excellence</li>
+          <li>Padma Shri</li>
+          <li>Arjuna Award</li>
+          <li>Multiple national and international records</li>
         </ul>
       </div>
     </section>
 
-    <footer class="footer container">
-      <div>© <span id="year"></span> Virat Fan Site • Built with ❤️</div>
-      <div>Follow: <a href="https://www.instagram.com/virat.kohli/" target="_blank" rel="noopener">Instagram</a> • <a href="https://twitter.com/imVkohli" target="_blank" rel="noopener">Twitter</a></div>
-    </footer>
+    <section id="stats" class="container section">
+      <h2>Key Stats</h2>
+      <div class="grid-stats">
+        <div class="stat"><div class="num" data-target="13000">0</div><div class="label">International Runs</div></div>
+        <div class="stat"><div class="num" data-target="70">0</div><div class="label">International Centuries</div></div>
+        <div class="stat"><div class="num" data-target="600">0</div><div class="label">ODI Matches</div></div>
+        <div class="stat"><div class="num" data-target="80">0</div><div class="label">Test Centuries</div></div>
+      </div>
+      <p class="small-note">Numbers are placeholders — update with verified stats before publishing.</p>
+    </section>
+
+    <section id="gallery" class="container section">
+      <h2>Gallery — Cricket Moments</h2>
+      <div class="gallery">
+        <figure class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1508264165352-c9b3a2d7b9a8?auto=format&fit=crop&w=1200&q=80" alt="Cricket bat close-up" data-full="">
+          <figcaption>Bat and match focus</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1508973374-0b2d9f6c3b52?auto=format&fit=crop&w=1200&q=80" alt="Cricket stadium at night" data-full="">
+          <figcaption>Stadium lights</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1546484959-fb8d8f6f4a05?auto=format&fit=crop&w=1200&q=80" alt="Cricket ball on pitch" data-full="">
+          <figcaption>Red ball, pure focus</figcaption>
+        </figure>
+      </div>
+      <p class="caption">Replace images with licensed player photos if you have rights to them.</p>
+    </section>
+
+    <section id="contact" class="container section">
+      <h2>Contact & Credits</h2>
+      <p>Data and images are illustrative — cite official records for publication and replace images with licensed assets when needed.</p>
+    </section>
   </main>
 
-  <script src="/app.js" defer></script>
+  <!-- Floating achievement badges (bottom-left) -->
+  <div class="floating-feats glass-card" aria-label="Quick achievements">
+    <span class="feat-badge">55 ODI Tons</span>
+    <span class="feat-badge">30 Test Tons</span>
+    <span class="feat-badge">1 T20I Ton</span>
+    <span class="feat-badge">Fastest 10K</span>
+    <span class="feat-badge">ICC Cricketer</span>
+    <span class="feat-badge">World Cup 2011</span>
+  </div>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lightbox-close" aria-label="Close image">✕</button>
+    <img id="lightbox-img" src="" alt="" />
+    <div id="lightbox-caption"></div>
+  </div>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> VIRAT-18</div>
+    <div class="footer-right">Built with ⚡ Futuristic Cricket Theme</div>
+  </footer>
 </body>
 </html>
