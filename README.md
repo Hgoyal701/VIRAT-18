@@ -1,21 +1,22 @@
-# VIRAT-18
+VIRAT-18 — Virat Kohli fan site
 
-This repository now contains a redesigned, futuristic cricket-focused single-page site for Virat Kohli.
+This branch (improve/vercel-deploy) contains a static, deploy-ready site about Virat Kohli with improved styling and accessibility.
 
-Changes made:
-- New left-side menu (inspired by MeSSI repo menu style)
-- Futuristic neon / gradient styling
-- Cricket-only gallery images (Unsplash hotlinks focused on cricket)
-- Improved hero with cricket SVG and animated stat counters
-- Theme toggle (light/dark)
+How to run locally
 
-Files updated:
-- index.html
-- styles.css
-- script.js
+- Install a simple static server (optional):
+  - npx serve .
+  - or: python -m http.server 3000
 
-Preview locally: `npx http-server .` and open http://localhost:8080
+- Or use Vercel CLI for local dev:
+  - npm i -g vercel
+  - vercel dev
 
-Notes:
-- Replace Unsplash images with licensed player photos if you have rights.
-- If you want the menu behavior to match MeSSI exactly (floating icons, tooltips, or collapsible), tell me and I will fine-tune it further.
+Deploy to Vercel
+
+- Connect this repository to Vercel and deploy the improve/vercel-deploy branch, or run `vercel --prod` from this branch.
+
+Notes
+
+- Images in /index.html currently link to Unsplash placeholders — replace with high-resolution licensed images.
+- The site is intentionally minimal and static. If you'd like an Express/Next.js version, I can scaffold that.
