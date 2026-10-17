@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "test": { "matches": 115, "runs": 8580, "avg": 49.5, "hundreds": 27, "fifties": 29 },
+    "odi": { "matches": 280, "runs": 13478, "avg": 58.2, "hundreds": 46, "fifties": 65 },
+    "t20": { "matches": 115, "runs": 4000, "avg": 50.0, "hundreds": 1, "fifties": 37 }
+  },
+  "centuries": [
+    { "format": "ODI", "score": 183, "opp": "Pakistan", "venue": "Asia Cup", "year": 2012 },
+    { "format": "Test", "score": 254, "opp": "England", "venue": "Chennai", "year": 2016 }
+  ],
+  "milestones": [
+    { "year": 2008, "note": "Breakthrough in international cricket at U-19 and domestic level" },
+    { "year": 2011, "note": "Consolidated as a key batsman for India in all formats" },
+    { "year": 2018, "note": "Consistently ranked top in ICC batting charts" }
+  ],
+  "notes": "This is a static snapshot. For up-to-date official stats use ICC or ESPNcricinfo APIs."
+}
