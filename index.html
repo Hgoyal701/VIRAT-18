@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Virat Kohli — The Run Machine</title>
   <meta name="description" content="A fan site showcasing Virat Kohli's career, stats, achievements and highlights. Built for static deployment on Vercel." />
+  <meta name="theme-color" content="#08306b">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +35,7 @@
         <div class="hero-left">
           <p class="eyebrow">Cricket • International • Legend</p>
           <h1>Virat Kohli</h1>
-          <p class="lead">One of the greatest modern batsmen — aggressive, consistent, and a relentless run-scoring machine. A journey through records, milestones and moments that define his career.</p>
+          <p class="lead">One of the greatest modern batsmen — aggressive, consistent, and a relentless run-scoring machine. A journey through records, milestones and moments that define his career and inspire millions around the world.</p>
 
           <div class="cta">
             <a class="btn primary" href="#achievements">Explore Achievements</a>
@@ -179,7 +180,7 @@
       <div class="lightbox" id="lightbox" aria-hidden="true">
         <button id="lightbox-close" aria-label="Close">✕</button>
         <img id="lightbox-img" src="" alt="" />
-        <div id="lightbox-caption"></div>
+        <div id="lightbox-caption" aria-live="polite"></div>
       </div>
     </section>
 
@@ -201,6 +202,6 @@
     </footer>
   </main>
 
-  <script src="/app.js"></script>
+  <script src="/app.js" defer></script>
 </body>
 </html>
