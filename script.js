@@ -1,133 +1,100 @@
+// script.js - interactions: sidebar active state, counters, theme, gallery lightbox, floating badges
 document.addEventListener('DOMContentLoaded', () => {
+  // year
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  const applyTheme = (name) => {
-    document.documentElement.classList.remove('theme-arg', 'theme-india', 'light');
-    if (name === 'india') {
-      document.documentElement.classList.add('theme-india');
-    } else {
-      document.documentElement.classList.add('theme-arg');
-    }
-    localStorage.setItem('siteTheme', name);
-
-    const themeBtn = document.getElementById('themeToggle');
-    if (themeBtn) {
-      themeBtn.textContent = name === 'india' ? '☀️' : '🌙';
-    }
-  };
-
-  const savedTheme = localStorage.getItem('siteTheme') || 'arg';
-  applyTheme(savedTheme);
-
+  // theme toggle (persisted)
   const themeBtn = document.getElementById('themeToggle');
-  if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      const nextTheme = localStorage.getItem('siteTheme') === 'arg' ? 'india' : 'arg';
-      applyTheme(nextTheme);
-    });
-  }
+  const applyTheme = (light) => {
+    if (light) document.documentElement.classList.add('light');
+    else document.documentElement.classList.remove('light');
+    if (themeBtn) themeBtn.textContent = light ? '☀️' : '🌙';
+    try { localStorage.setItem('siteLight', light ? '1' : '0'); } catch(e){}
+  };
+  const saved = (localStorage.getItem('siteLight') === '1');
+  applyTheme(saved);
+  themeBtn?.addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('light')));
 
-  const navLinks = document.querySelectorAll('.side-nav a');
-  const sections = [...document.querySelectorAll('header[id], main section[id]')];
-
-  const updateActiveNav = () => {
-    const scrollPosition = window.scrollY + 180;
-    let activeId = 'hero';
-
-    sections.forEach((section) => {
-      if (section.offsetTop <= scrollPosition) {
-        activeId = section.id;
-      }
-    });
-
-    navLinks.forEach((link) => {
-      const targetId = link.getAttribute('href')?.replace('#', '');
-      link.classList.toggle('active', targetId === activeId);
+  // nav smooth + active
+  const links = Array.from(document.querySelectorAll('.side-nav a'));
+  const sections = Array.from(document.querySelectorAll('header[id], main section[id]'));
+  const updateActive = () => {
+    const offset = window.scrollY + window.innerHeight / 3;
+    let current = sections[0];
+    sections.forEach(s => { if (s.offsetTop <= offset) current = s; });
+    links.forEach(a => {
+      const href = a.getAttribute('href')?.replace('#', '');
+      a.classList.toggle('active', href === current.id);
     });
   };
-
-  window.addEventListener('scroll', updateActiveNav, { passive: true });
-  updateActiveNav();
-
-  navLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const targetId = link.getAttribute('href');
-      if (!targetId || !targetId.startsWith('#')) return;
-
-      const targetSection = document.querySelector(targetId);
-      if (!targetSection) return;
-
-      event.preventDefault();
-      targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+  links.forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const el = document.querySelector(href);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
+  // counters (intersection)
   const counters = document.querySelectorAll('.num');
-  const animateCounter = (element) => {
-    const target = Number(element.dataset.target || 0);
-    const duration = 1400;
-    const startTime = performance.now();
-
-    const tick = (currentTime) => {
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const value = Math.floor(target * eased);
-      element.textContent = value.toLocaleString();
-
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        element.textContent = target.toLocaleString();
-      }
+  const animate = (el, target) => {
+    const dur = 1400;
+    let start = null;
+    const step = (t) => {
+      if (!start) start = t;
+      const p = Math.min((t - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(target * ease).toLocaleString();
+      if (p < 1) requestAnimationFrame(step); else el.textContent = target.toLocaleString();
     };
-
-    requestAnimationFrame(tick);
+    requestAnimationFrame(step);
   };
-
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          observer.unobserve(entry.target);
+          const target = Number(entry.target.dataset.target || 0);
+          animate(entry.target, target);
+          obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.45 });
-
-    counters.forEach((counter) => observer.observe(counter));
+    }, { threshold: 0.5 });
+    counters.forEach(c => obs.observe(c));
   } else {
-    counters.forEach((counter) => animateCounter(counter));
+    counters.forEach(c => animate(c, Number(c.dataset.target || 0)));
   }
 
+  // gallery lightbox
   const lightbox = document.getElementById('lightbox');
-  if (lightbox) {
-    const lightboxImage = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
-    const closeBtn = document.getElementById('lightbox-close');
-
-    document.querySelectorAll('.gallery-item img').forEach((img) => {
-      img.addEventListener('click', () => {
-        if (!lightboxImage || !lightboxCaption) return;
-        lightboxImage.src = img.dataset.full || img.src;
-        lightboxImage.alt = img.alt || '';
-        const caption = img.closest('.gallery-item')?.querySelector('figcaption')?.textContent || '';
-        lightboxCaption.textContent = caption;
-        lightbox.classList.add('show');
-        lightbox.setAttribute('aria-hidden', 'false');
-      });
+  const lbImg = document.getElementById('lightbox-img');
+  const lbCap = document.getElementById('lightbox-caption');
+  const lbClose = document.getElementById('lightbox-close');
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      if (!lightbox || !lbImg) return;
+      lbImg.src = img.dataset.full || img.src;
+      lbImg.alt = img.alt || '';
+      lbCap.textContent = img.closest('.gallery-item')?.querySelector('figcaption')?.textContent || '';
+      lightbox.classList.add('show'); lightbox.setAttribute('aria-hidden', 'false');
     });
+  });
+  lbClose?.addEventListener('click', () => { lightbox.classList.remove('show'); lightbox.setAttribute('aria-hidden', 'true'); });
+  lightbox?.addEventListener('click', (ev) => { if (ev.target === lightbox) { lightbox.classList.remove('show'); lightbox.setAttribute('aria-hidden', 'true'); } });
 
-    closeBtn?.addEventListener('click', () => {
-      lightbox.classList.remove('show');
-      lightbox.setAttribute('aria-hidden', 'true');
-    });
-
-    lightbox.addEventListener('click', (event) => {
-      if (event.target === lightbox) {
-        lightbox.classList.remove('show');
-        lightbox.setAttribute('aria-hidden', 'true');
-      }
-    });
-  }
+  // subtle floating animation for feat badges
+  const badges = document.querySelectorAll('.feat-badge');
+  badges.forEach((b, i) => {
+    const delay = (i % 3) * 120;
+    b.animate([
+      { transform: 'translateY(0px) rotate(0deg)' },
+      { transform: `translateY(${ (i % 2 ? 6 : -6) }px) rotate(${ (i % 2 ? 1 : -1) }deg)` },
+      { transform: 'translateY(0px) rotate(0deg)' }
+    ], { duration: 4200 + (i * 150), iterations: Infinity, delay });
+  });
 });
