@@ -35,4 +35,4 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   counters.forEach(animateCounter);
-});
+}); 
