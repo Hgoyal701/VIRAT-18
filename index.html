@@ -1,100 +1,161 @@
-// script.js - interactions: sidebar active state, counters, theme, gallery lightbox, floating badges
-document.addEventListener('DOMContentLoaded', () => {
-  // year
-  const year = document.getElementById('year');
-  if (year) year.textContent = new Date().getFullYear();
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Virat Kohli — The Chase Master</title>
+  <meta name="description" content="A fan-made profile site for Virat Kohli — career, stats, achievements, gallery.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <aside class="side-nav" aria-label="Navigation">
+    <a href="#hero" class="brand">VIRAT</a>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#career">Career</a>
+      <a href="#stats">Stats</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+    </nav>
+    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+  </aside>
 
-  // theme toggle (persisted)
-  const themeBtn = document.getElementById('themeToggle');
-  const applyTheme = (light) => {
-    if (light) document.documentElement.classList.add('light');
-    else document.documentElement.classList.remove('light');
-    if (themeBtn) themeBtn.textContent = light ? '☀️' : '🌙';
-    try { localStorage.setItem('siteLight', light ? '1' : '0'); } catch(e){}
-  };
-  const saved = (localStorage.getItem('siteLight') === '1');
-  applyTheme(saved);
-  themeBtn?.addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('light')));
+  <main>
+    <header id="hero" class="hero">
+      <div class="hero-inner">
+        <h1>Virat Kohli</h1>
+        <p class="tag">The Chase Master — runs, records, and relentless intensity</p>
+        <div class="hero-cta">
+          <a href="#stats" class="btn">See Stats</a>
+          <a href="#career" class="btn ghost">Career Timeline</a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <img src="assets/img/virat-hero.svg" alt="Virat Kohli silhouette">
+      </figure>
+    </header>
 
-  // nav smooth + active
-  const links = Array.from(document.querySelectorAll('.side-nav a'));
-  const sections = Array.from(document.querySelectorAll('header[id], main section[id]'));
-  const updateActive = () => {
-    const offset = window.scrollY + window.innerHeight / 3;
-    let current = sections[0];
-    sections.forEach(s => { if (s.offsetTop <= offset) current = s; });
-    links.forEach(a => {
-      const href = a.getAttribute('href')?.replace('#', '');
-      a.classList.toggle('active', href === current.id);
-    });
-  };
-  window.addEventListener('scroll', updateActive, { passive: true });
-  updateActive();
-  links.forEach(a => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
-      const el = document.querySelector(href);
-      if (!el) return;
-      e.preventDefault();
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
+    <section id="achievements" class="container achievements">
+      <h2>Achievements</h2>
+      <div class="grid feats">
+        <article class="feat-badge">
+          <h3>ICC Awards</h3>
+          <p>Multiple ICC recognitions across formats.</p>
+        </article>
+        <article class="feat-badge">
+          <h3>Centuries</h3>
+          <p>One of the highest century counts in modern cricket.</p>
+        </article>
+        <article class="feat-badge">
+          <h3>Records</h3>
+          <p>Fastest to several run milestones in international cricket.</p>
+        </article>
+      </div>
+    </section>
 
-  // counters (intersection)
-  const counters = document.querySelectorAll('.num');
-  const animate = (el, target) => {
-    const dur = 1400;
-    let start = null;
-    const step = (t) => {
-      if (!start) start = t;
-      const p = Math.min((t - start) / dur, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.floor(target * ease).toLocaleString();
-      if (p < 1) requestAnimationFrame(step); else el.textContent = target.toLocaleString();
-    };
-    requestAnimationFrame(step);
-  };
-  if ('IntersectionObserver' in window) {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const target = Number(entry.target.dataset.target || 0);
-          animate(entry.target, target);
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(c => obs.observe(c));
-  } else {
-    counters.forEach(c => animate(c, Number(c.dataset.target || 0)));
-  }
+    <section id="career" class="container timeline">
+      <h2>Career Timeline</h2>
+      <ol>
+        <li><strong>2006</strong> — ODI debut for India</li>
+        <li><strong>2011</strong> — Established as top-order mainstay</li>
+        <li><strong>2013–2022</strong> — Captaincy era (various formats)</li>
+        <li><strong>2018–2021</strong> — Dominant run-scoring years</li>
+        <li><strong>2023+</strong> — Continued excellence across formats</li>
+      </ol>
+    </section>
 
-  // gallery lightbox
-  const lightbox = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightbox-img');
-  const lbCap = document.getElementById('lightbox-caption');
-  const lbClose = document.getElementById('lightbox-close');
-  document.querySelectorAll('.gallery-item img').forEach(img => {
-    img.addEventListener('click', () => {
-      if (!lightbox || !lbImg) return;
-      lbImg.src = img.dataset.full || img.src;
-      lbImg.alt = img.alt || '';
-      lbCap.textContent = img.closest('.gallery-item')?.querySelector('figcaption')?.textContent || '';
-      lightbox.classList.add('show'); lightbox.setAttribute('aria-hidden', 'false');
-    });
-  });
-  lbClose?.addEventListener('click', () => { lightbox.classList.remove('show'); lightbox.setAttribute('aria-hidden', 'true'); });
-  lightbox?.addEventListener('click', (ev) => { if (ev.target === lightbox) { lightbox.classList.remove('show'); lightbox.setAttribute('aria-hidden', 'true'); } });
+    <section id="stats" class="container stats">
+      <h2>Career Stats</h2>
+      <div class="counters">
+        <div class="card">
+          <div class="num" data-target="24137">0</div>
+          <div class="label">International runs (combined)</div>
+        </div>
+        <div class="card">
+          <div class="num" data-target="76">0</div>
+          <div class="label">International centuries</div>
+        </div>
+        <div class="card">
+          <div class="num" data-target="483">0</div>
+          <div class="label">Matches (approx.)</div>
+        </div>
+      </div>
 
-  // subtle floating animation for feat badges
-  const badges = document.querySelectorAll('.feat-badge');
-  badges.forEach((b, i) => {
-    const delay = (i % 3) * 120;
-    b.animate([
-      { transform: 'translateY(0px) rotate(0deg)' },
-      { transform: `translateY(${ (i % 2 ? 6 : -6) }px) rotate(${ (i % 2 ? 1 : -1) }deg)` },
-      { transform: 'translateY(0px) rotate(0deg)' }
-    ], { duration: 4200 + (i * 150), iterations: Infinity, delay });
-  });
-});
+      <div class="format-stats">
+        <div class="format">
+          <h3>Test</h3>
+          <table>
+            <tr><th>Matches</th><td id="test-matches">115</td></tr>
+            <tr><th>Runs</th><td id="test-runs">8580</td></tr>
+            <tr><th>Avg</th><td id="test-avg">49.5</td></tr>
+            <tr><th>100s</th><td id="test-100s">27</td></tr>
+          </table>
+        </div>
+        <div class="format">
+          <h3>ODI</h3>
+          <table>
+            <tr><th>Matches</th><td id="odi-matches">280</td></tr>
+            <tr><th>Runs</th><td id="odi-runs">13478</td></tr>
+            <tr><th>Avg</th><td id="odi-avg">58.2</td></tr>
+            <tr><th>100s</th><td id="odi-100s">46</td></tr>
+          </table>
+        </div>
+        <div class="format">
+          <h3>T20I</h3>
+          <table>
+            <tr><th>Matches</th><td id="t20-matches">115</td></tr>
+            <tr><th>Runs</th><td id="t20-runs">4000</td></tr>
+            <tr><th>Avg</th><td id="t20-avg">50.0</td></tr>
+            <tr><th>100s</th><td id="t20-100s">1</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <details class="more-stats">
+        <summary>Full static data (snapshot)</summary>
+        <pre id="raw-data"></pre>
+      </details>
+    </section>
+
+    <section id="gallery" class="container gallery">
+      <h2>Gallery</h2>
+      <div class="grid gallery-grid">
+        <figure class="gallery-item">
+          <img src="assets/img/gallery1.svg" data-full="assets/img/gallery1.svg" alt="Virat action 1">
+          <figcaption>Chasing down a target</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="assets/img/gallery2.svg" data-full="assets/img/gallery2.svg" alt="Virat action 2">
+          <figcaption>Celebration</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="assets/img/gallery3.svg" data-full="assets/img/gallery3.svg" alt="Virat action 3">
+          <figcaption>Batting stance</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="about" class="container about">
+      <h2>About this site</h2>
+      <p>This is a fan-made, open-source profile built to showcase Virat Kohli's career highlights and stats. Stats are a static snapshot and should be updated from official sources for accuracy.</p>
+      <p>Source &amp; contribute on GitHub: <a href="https://github.com/Hgoyal701/VIRAT-18">Hgoyal701/VIRAT-18</a></p>
+    </section>
+
+    <footer class="site-footer">
+      <div>© <span id="year"></span> Fan site • Built from the VIRAT-18 repo</div>
+    </footer>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-inner" role="dialog" aria-modal="true">
+      <button id="lightbox-close" class="lightbox-close" aria-label="Close">✕</button>
+      <img id="lightbox-img" src="" alt="">
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
