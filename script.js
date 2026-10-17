@@ -1,68 +1,82 @@
-// script.js - interactions: sidebar active state, counters, theme
-document.addEventListener('DOMContentLoaded', ()=>{
-  // set year
+document.addEventListener('DOMContentLoaded', () => {
   const year = document.getElementById('year');
-  if(year) year.textContent = new Date().getFullYear();
+  if (year) year.textContent = new Date().getFullYear();
 
-  // theme
   const themeBtn = document.getElementById('themeToggle');
-  themeBtn?.addEventListener('click', ()=>{
-    document.documentElement.classList.toggle('light');
-    themeBtn.textContent = document.documentElement.classList.contains('light') ? '☀️' : '🌙';
-  });
-
-  // smooth scroll and active nav
-  const links = document.querySelectorAll('aside .side-nav a');
-  const sections = Array.from(document.querySelectorAll('main, header')).flatMap(p => Array.from(p.querySelectorAll('section, header'))).filter(Boolean);
-
-  function onScroll(){
-    const offset = window.scrollY + window.innerHeight/3;
-    let current = sections[0];
-    for(const sec of sections){
-      if(sec.offsetTop <= offset) current = sec;
-    }
-    links.forEach(a=>{
-      const href = a.getAttribute('href');
-      if(href && current && href === '#'+current.id){
-        a.classList.add('active');
-      } else a.classList.remove('active');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light');
+      const isLight = document.documentElement.classList.contains('light');
+      themeBtn.textContent = isLight ? '☀️' : '🌙';
     });
   }
-  window.addEventListener('scroll', onScroll);
-  onScroll();
 
-  links.forEach(a=>{
-    a.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const href = a.getAttribute('href');
-      if(!href) return;
-      const el = document.querySelector(href);
-      el?.scrollIntoView({behavior:'smooth',block:'start'});
+  const navLinks = document.querySelectorAll('.side-nav a');
+  const sections = [...document.querySelectorAll('header[id], main section[id]')];
+
+  function updateActiveNav() {
+    const scrollPosition = window.scrollY + 160;
+    let activeId = 'hero';
+
+    sections.forEach((section) => {
+      if (section.offsetTop <= scrollPosition) {
+        activeId = section.id;
+      }
+    });
+
+    navLinks.forEach((link) => {
+      const targetId = link.getAttribute('href')?.replace('#', '');
+      link.classList.toggle('active', targetId === activeId);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const targetId = link.getAttribute('href');
+      if (!targetId || !targetId.startsWith('#')) return;
+
+      const targetSection = document.querySelector(targetId);
+      if (!targetSection) return;
+
+      event.preventDefault();
+      targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
-  // counters
   const counters = document.querySelectorAll('.num');
-  const animate = (el, target)=>{
-    const dur = 1200; let start = null;
-    const tick = (t)=>{
-      if(!start) start = t;
-      const p = Math.min((t-start)/dur,1);
-      const ease = 1 - Math.pow(1-p,3);
-      el.textContent = Math.floor(target*ease).toLocaleString();
-      if(p<1) requestAnimationFrame(tick); else el.textContent = target.toLocaleString();
+
+  const animateCounter = (element) => {
+    const target = Number(element.dataset.target || 0);
+    const duration = 1200;
+    const startTime = performance.now();
+
+    const tick = (currentTime) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.floor(target * eased);
+      element.textContent = value.toLocaleString();
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        element.textContent = target.toLocaleString();
+      }
     };
+
     requestAnimationFrame(tick);
   };
 
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const target = Number(entry.target.getAttribute('data-target')||0);
-        animate(entry.target, target);
-        obs.unobserve(entry.target);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
       }
     });
-  },{threshold:0.5});
-  counters.forEach(c=>obs.observe(c));
+  }, { threshold: 0.5 });
+
+  counters.forEach((counter) => observer.observe(counter));
 });
