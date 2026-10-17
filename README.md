@@ -1,20 +1,21 @@
 # VIRAT-18
 
-This repository contains a stylish single-page website celebrating Virat Kohli and his cricket achievements.
+This repository now contains a redesigned, futuristic cricket-focused single-page site for Virat Kohli.
 
-## Included files
+Changes made:
+- New left-side menu (inspired by MeSSI repo menu style)
+- Futuristic neon / gradient styling
+- Cricket-only gallery images (Unsplash hotlinks focused on cricket)
+- Improved hero with cricket SVG and animated stat counters
+- Theme toggle (light/dark)
+
+Files updated:
 - index.html
 - styles.css
 - script.js
 
-## Preview locally
-Open `index.html` in a browser, or run a simple static server:
+Preview locally: `npx http-server .` and open http://localhost:8080
 
-```bash
-npx http-server .
-```
-
-## Notes
-- The design is built with HTML, CSS, and JavaScript.
-- The page includes a bold hero section, achievement timeline, stat counters, and gallery.
-- Images are loaded from Unsplash for demo purposes.
+Notes:
+- Replace Unsplash images with licensed player photos if you have rights.
+- If you want the menu behavior to match MeSSI exactly (floating icons, tooltips, or collapsible), tell me and I will fine-tune it further.

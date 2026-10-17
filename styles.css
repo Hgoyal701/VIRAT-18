@@ -1,150 +1,82 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Virat Kohli — Futuristic Cricket Profile</title>
-  <meta name="description" content="A futuristic portfolio-style site focused on Virat Kohli and his cricket achievements." />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
-</head>
-<body>
-  <aside class="sidebar" aria-label="Primary">
-    <div class="logo">VIRAT</div>
-    <nav class="side-nav">
-      <a href="#hero" class="active" data-label="Home">🏟️</a>
-      <a href="#about" data-label="About">🧾</a>
-      <a href="#achievements" data-label="Achievements">🏆</a>
-      <a href="#stats" data-label="Stats">📊</a>
-      <a href="#gallery" data-label="Gallery">📷</a>
-      <a href="#contact" data-label="Contact">✉️</a>
-    </nav>
-    <div class="sidebar-footer">
-      <button id="themeToggle" aria-label="Toggle theme">🌙</button>
-    </div>
-  </aside>
+/* styles.css - futuristic cricket theme with left menu */
+:root{
+  --bg-1:#020617;
+  --bg-2:#06142a;
+  --accent1:#00e5ff;
+  --accent2:#ff4d4d;
+  --panel: rgba(255,255,255,0.03);
+  --muted: #97a6b9;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto} 
+body{background:radial-gradient(600px 400px at 10% 10%, rgba(0,229,255,0.06), transparent 10%), linear-gradient(180deg,var(--bg-1),var(--bg-2));color:#e7f6ff}
+.container{max-width:1100px;margin:0 auto;padding:2rem}
 
-  <header id="hero" class="hero">
-    <div class="hero-inner container">
-      <div class="hero-left">
-        <p class="eyebrow">THE RUN MACHINE</p>
-        <h1>Virat Kohli</h1>
-        <p class="lead">Futuristic take on a cricket legend — records, milestones and the relentless chase for runs.</p>
-        <div class="cta">
-          <a class="btn primary" href="#achievements">View Achievements</a>
-          <a class="btn ghost" href="#stats">See Stats</a>
-        </div>
-      </div>
+/* Sidebar */
+.sidebar{position:fixed;left:18px;top:18px;bottom:18px;width:78px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(8px)}
+.logo{font-family:Orbitron, sans-serif;font-weight:700;color:var(--accent2);letter-spacing:0.16em}
+.side-nav{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.side-nav a{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:18px}
+.side-nav a.active, .side-nav a:hover{background:linear-gradient(90deg, rgba(0,229,255,0.06), rgba(255,77,77,0.04));color:#fff;box-shadow:0 6px 20px rgba(0,229,255,0.06)}
+.sidebar-footer{width:100%;display:flex;justify-content:center}
+#themeToggle{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cfefff;padding:8px;border-radius:10px;cursor:pointer}
 
-      <div class="hero-right">
-        <div class="card neon-card">
-          <svg class="cricket-ball" viewBox="0 0 100 100" aria-hidden="true">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0" stop-color="#ff4d4d"/>
-                <stop offset="1" stop-color="#ff9f43"/>
-              </linearGradient>
-            </defs>
-            <circle cx="50" cy="50" r="44" fill="url(#g1)" />
-            <path d="M18 45c10 8 20 8 32 0" stroke="#fff" stroke-width="2" fill="none"/>
-            <path d="M82 55c-10 -8 -20 -8 -32 0" stroke="#fff" stroke-width="2" fill="none"/>
-          </svg>
-          <div class="card-body">
-            <h3>Cricket, Not Just a Game</h3>
-            <p>All content is cricket-focused: match-winning innings, records, and honors only.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-bg"></div>
-  </header>
+/* Hero */
+.hero{padding-left:120px;padding-top:60px;padding-bottom:40px;position:relative;overflow:hidden}
+.hero-inner{display:flex;align-items:center;gap:3rem}
+.hero-left{flex:1}
+.eyebrow{color:var(--accent1);font-weight:700;letter-spacing:0.18em}
+h1{font-family:Orbitron, sans-serif;font-size:3.6rem;margin:6px 0}
+.lead{color:var(--muted);max-width:48ch;line-height:1.6}
+.cta{margin-top:18px;display:flex;gap:12px}
+.btn{padding:0.7rem 1.1rem;border-radius:12px;font-weight:700;text-decoration:none}
+.btn.primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#041021;box-shadow:0 20px 50px rgba(0,229,255,0.06)}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#e7f6ff}
 
-  <main>
-    <section id="about" class="container section">
-      <div class="section-grid">
-        <div>
-          <h2>About</h2>
-          <p>Virat Kohli is an Indian international cricketer, renowned for intense concentration, modern technique and exceptional chasing ability. This site focuses on his cricketing journey and achievements.</p>
-        </div>
-        <aside class="stats-compact">
-          <div><strong>Born</strong><span>5 Nov 1988</span></div>
-          <div><strong>Role</strong><span>Top-order batter</span></div>
-          <div><strong>Batting</strong><span>Right-hand</span></div>
-          <div><strong>Teams</strong><span>India • RCB</span></div>
-        </aside>
-      </div>
-    </section>
+.hero-right{width:360px}
+.neon-card{padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(0,229,255,0.06);box-shadow:0 30px 80px rgba(0,229,255,0.04)}
+.cricket-ball{width:100%;height:auto;display:block}
+.card-body h3{margin:0 0 8px}
+.card-body p{margin:0;color:var(--muted)}
+.hero-bg{position:absolute;right:-120px;top:0;width:700px;height:700px;background:radial-gradient(circle at 40% 40%, rgba(0,229,255,0.06), transparent 10%);filter:blur(45px);pointer-events:none}
 
-    <section id="achievements" class="container section">
-      <h2>Achievements</h2>
-      <div class="timeline">
-        <article class="event">
-          <div class="date">2012</div>
-          <div class="event-body">
-            <h3>ICC ODI Player of the Year</h3>
-            <p>Exceptional performances in white-ball cricket earned global recognition.</p>
-          </div>
-        </article>
+/* Sections */
+.section{padding:64px 0}
+.section h2{font-family:Orbitron, sans-serif;font-size:2rem;margin:0 0 14px}
+.section-grid{display:grid;grid-template-columns:1fr 260px;gap:22px;align-items:start}
+.stats-compact{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+.stats-compact div{display:flex;justify-content:space-between;padding:8px 0;color:var(--muted)}
 
-        <article class="event alternate">
-          <div class="date">2017</div>
-          <div class="event-body">
-            <h3>ICC Cricketer of the Year</h3>
-            <p>Awarded the Sir Garfield Sobers Trophy for stellar all-format performances.</p>
-          </div>
-        </article>
+.timeline{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+.event{display:flex;gap:14px;align-items:flex-start}
+.date{width:100px;color:var(--accent1);font-weight:700}
+.event-body{background:var(--panel);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+.event.alternate .event-body{background:linear-gradient(90deg, rgba(0,229,255,0.02), rgba(255,77,77,0.02))}
 
-        <article class="event">
-          <div class="date">2018</div>
-          <div class="event-body">
-            <h3>Fastest to 10,000 ODI runs (by innings)</h3>
-            <p>Demonstrated remarkable scoring rate and longevity in ODIs.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+.grid-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
+.stat{background:linear-gradient(180deg, rgba(255,255,255,0.02),transparent);padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);text-align:center}
+.num{font-size:1.6rem;font-weight:800;color:var(--accent2)}
+.label{color:var(--muted);margin-top:6px}
 
-    <section id="stats" class="container section">
-      <h2>Key Stats</h2>
-      <div class="grid-stats">
-        <div class="stat"><div class="num" data-target="13000">0</div><div class="label">International Runs</div></div>
-        <div class="stat"><div class="num" data-target="70">0</div><div class="label">International Centuries</div></div>
-        <div class="stat"><div class="num" data-target="600">0</div><div class="label">ODI Matches</div></div>
-        <div class="stat"><div class="num" data-target="80">0</div><div class="label">Test Centuries</div></div>
-      </div>
-    </section>
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.gallery img{width:100%;height:220px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+.caption{color:var(--muted);font-size:0.95rem;margin-top:8px}
 
-    <section id="gallery" class="container section">
-      <h2>Gallery — Cricket Moments</h2>
-      <div class="gallery">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1508264165352-c9b3a2d7b9a8?auto=format&fit=crop&w=1200&q=80" alt="Cricket bat close-up" />
-          <figcaption>Bat and match focus</figcaption>
-        </figure>
+.footer{padding:20px 2rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.2));display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
 
-        <figure>
-          <img src="https://images.unsplash.com/photo-1508973374-0b2d9f6c3b52?auto=format&fit=crop&w=1200&q=80" alt="Cricket stadium at night" />
-          <figcaption>Stadium lights</figcaption>
-        </figure>
-
-        <figure>
-          <img src="https://images.unsplash.com/photo-1546484959-fb8d8f6f4a05?auto=format&fit=crop&w=1200&q=80" alt="Cricket ball on pitch" />
-          <figcaption>Red ball, pure focus</figcaption>
-        </figure>
-      </div>
-      <p class="caption">All images showcase cricket-only subjects. Replace with player-specific images if you have rights to them.</p>
-    </section>
-
-    <section id="contact" class="container section">
-      <h2>Contact & Credits</h2>
-      <p>Data and images are illustrative — cite official match records for publication and replace images with licensed assets when needed.</p>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div>© <span id="year"></span> VIRAT-18</div>
-    <div class="footer-right">Built with ⚡ Futuristic Cricket Theme</div>
-  </footer>
-</body>
-</html>
+/* Responsive */
+@media(max-width:992px){
+  .sidebar{left:10px;width:64px}
+  .hero{padding-left:94px}
+  .hero-right{display:none}
+  .section-grid{grid-template-columns:1fr}
+  .grid-stats{grid-template-columns:repeat(2,1fr)}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .sidebar{display:none}
+  .hero{padding-left:20px;padding-top:24px}
+  .hero h1{font-size:2.4rem}
+  .grid-stats{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr}
+}
