@@ -1,161 +1,179 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Virat Kohli — The Chase Master</title>
-  <meta name="description" content="A fan-made profile site for Virat Kohli — career, stats, achievements, gallery.">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virat Kohli | Career, Stats & Achievements</title>
+  <meta
+    name="description"
+    content="Virat Kohli fan website featuring his career, stats, achievements, timeline, and gallery."
+  />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <aside class="side-nav" aria-label="Navigation">
-    <a href="#hero" class="brand">VIRAT</a>
-    <nav>
-      <a href="#hero">Home</a>
-      <a href="#achievements">Achievements</a>
+  <aside class="sidebar">
+    <div class="brand">VK</div>
+    <nav class="nav">
+      <a href="#home" class="active">Home</a>
       <a href="#career">Career</a>
+      <a href="#achievements">Achievements</a>
       <a href="#stats">Stats</a>
       <a href="#gallery">Gallery</a>
-      <a href="#about">About</a>
     </nav>
-    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+    <button id="themeToggle" class="theme-btn">🌙</button>
   </aside>
 
-  <main>
-    <header id="hero" class="hero">
-      <div class="hero-inner">
+  <main class="content">
+    <section id="home" class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">THE CHASE MASTER</p>
         <h1>Virat Kohli</h1>
-        <p class="tag">The Chase Master — runs, records, and relentless intensity</p>
-        <div class="hero-cta">
-          <a href="#stats" class="btn">See Stats</a>
-          <a href="#career" class="btn ghost">Career Timeline</a>
+        <p>
+          One of the greatest modern batsmen in cricket, known for chasing,
+          consistency, and fearless batting under pressure.
+        </p>
+        <div class="cta-row">
+          <a href="#stats" class="primary-btn">View Stats</a>
+          <a href="#career" class="secondary-btn">Career Timeline</a>
         </div>
       </div>
-      <figure class="hero-figure">
-        <img src="assets/img/virat-hero.svg" alt="Virat Kohli silhouette">
-      </figure>
-    </header>
 
-    <section id="achievements" class="container achievements">
-      <h2>Achievements</h2>
-      <div class="grid feats">
-        <article class="feat-badge">
-          <h3>ICC Awards</h3>
-          <p>Multiple ICC recognitions across formats.</p>
-        </article>
-        <article class="feat-badge">
-          <h3>Centuries</h3>
-          <p>One of the highest century counts in modern cricket.</p>
-        </article>
-        <article class="feat-badge">
-          <h3>Records</h3>
-          <p>Fastest to several run milestones in international cricket.</p>
-        </article>
+      <div class="hero-visual">
+        <div class="player-card">
+          <img
+            src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80"
+            alt="Virat Kohli playing cricket"
+          />
+        </div>
       </div>
     </section>
 
-    <section id="career" class="container timeline">
+    <section id="career" class="section">
       <h2>Career Timeline</h2>
-      <ol>
-        <li><strong>2006</strong> — ODI debut for India</li>
-        <li><strong>2011</strong> — Established as top-order mainstay</li>
-        <li><strong>2013–2022</strong> — Captaincy era (various formats)</li>
-        <li><strong>2018–2021</strong> — Dominant run-scoring years</li>
-        <li><strong>2023+</strong> — Continued excellence across formats</li>
-      </ol>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span>2006</span>
+          <p>ODI debut for India</p>
+        </div>
+        <div class="timeline-item">
+          <span>2008</span>
+          <p>International breakthrough</p>
+        </div>
+        <div class="timeline-item">
+          <span>2011</span>
+          <p>India’s World Cup-winning campaign role</p>
+        </div>
+        <div class="timeline-item">
+          <span>2013</span>
+          <p>Emergence as the backbone of India’s batting</p>
+        </div>
+        <div class="timeline-item">
+          <span>2016</span>
+          <p>Historic Test run and captaincy era</p>
+        </div>
+        <div class="timeline-item">
+          <span>2018+</span>
+          <p>Peak form across ODIs, Tests and T20Is</p>
+        </div>
+      </div>
     </section>
 
-    <section id="stats" class="container stats">
+    <section id="achievements" class="section">
+      <h2>Achievements</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>ICC Awards</h3>
+          <p>Multiple ICC Player of the Year and ODI awards.</p>
+        </div>
+        <div class="card">
+          <h3>Centuries</h3>
+          <p>One of the most prolific century scorers in world cricket.</p>
+        </div>
+        <div class="card">
+          <h3>Records</h3>
+          <p>Fastest to several major milestones in international cricket.</p>
+        </div>
+        <div class="card">
+          <h3>Captaincy</h3>
+          <p>Led India with aggressive, fearless intent and passion.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="stats" class="section">
       <h2>Career Stats</h2>
-      <div class="counters">
-        <div class="card">
-          <div class="num" data-target="24137">0</div>
-          <div class="label">International runs (combined)</div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="num" data-target="25000">0</span>
+          <label>International Runs</label>
         </div>
-        <div class="card">
-          <div class="num" data-target="76">0</div>
-          <div class="label">International centuries</div>
+        <div class="stat-box">
+          <span class="num" data-target="80">0</span>
+          <label>International 100s</label>
         </div>
-        <div class="card">
-          <div class="num" data-target="483">0</div>
-          <div class="label">Matches (approx.)</div>
-        </div>
-      </div>
-
-      <div class="format-stats">
-        <div class="format">
-          <h3>Test</h3>
-          <table>
-            <tr><th>Matches</th><td id="test-matches">115</td></tr>
-            <tr><th>Runs</th><td id="test-runs">8580</td></tr>
-            <tr><th>Avg</th><td id="test-avg">49.5</td></tr>
-            <tr><th>100s</th><td id="test-100s">27</td></tr>
-          </table>
-        </div>
-        <div class="format">
-          <h3>ODI</h3>
-          <table>
-            <tr><th>Matches</th><td id="odi-matches">280</td></tr>
-            <tr><th>Runs</th><td id="odi-runs">13478</td></tr>
-            <tr><th>Avg</th><td id="odi-avg">58.2</td></tr>
-            <tr><th>100s</th><td id="odi-100s">46</td></tr>
-          </table>
-        </div>
-        <div class="format">
-          <h3>T20I</h3>
-          <table>
-            <tr><th>Matches</th><td id="t20-matches">115</td></tr>
-            <tr><th>Runs</th><td id="t20-runs">4000</td></tr>
-            <tr><th>Avg</th><td id="t20-avg">50.0</td></tr>
-            <tr><th>100s</th><td id="t20-100s">1</td></tr>
-          </table>
+        <div class="stat-box">
+          <span class="num" data-target="300">0</span>
+          <label>ODIs Played</label>
         </div>
       </div>
 
-      <details class="more-stats">
-        <summary>Full static data (snapshot)</summary>
-        <pre id="raw-data"></pre>
-      </details>
+      <div class="format-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Format</th>
+              <th>Matches</th>
+              <th>Runs</th>
+              <th>Avg</th>
+              <th>100s</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tests</td>
+              <td>113</td>
+              <td>8,848</td>
+              <td>48.7</td>
+              <td>29</td>
+            </tr>
+            <tr>
+              <td>ODIs</td>
+              <td>295</td>
+              <td>13,848</td>
+              <td>58.2</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>T20Is</td>
+              <td>125</td>
+              <td>4,188</td>
+              <td>48.7</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
-    <section id="gallery" class="container gallery">
+    <section id="gallery" class="section">
       <h2>Gallery</h2>
-      <div class="grid gallery-grid">
-        <figure class="gallery-item">
-          <img src="assets/img/gallery1.svg" data-full="assets/img/gallery1.svg" alt="Virat action 1">
-          <figcaption>Chasing down a target</figcaption>
-        </figure>
-        <figure class="gallery-item">
-          <img src="assets/img/gallery2.svg" data-full="assets/img/gallery2.svg" alt="Virat action 2">
-          <figcaption>Celebration</figcaption>
-        </figure>
-        <figure class="gallery-item">
-          <img src="assets/img/gallery3.svg" data-full="assets/img/gallery3.svg" alt="Virat action 3">
-          <figcaption>Batting stance</figcaption>
-        </figure>
+      <div class="gallery-grid">
+        <img
+          src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80"
+          alt="Virat Kohli batting"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80"
+          alt="Cricket action scene"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80"
+          alt="Virat Kohli celebration"
+        />
       </div>
     </section>
-
-    <section id="about" class="container about">
-      <h2>About this site</h2>
-      <p>This is a fan-made, open-source profile built to showcase Virat Kohli's career highlights and stats. Stats are a static snapshot and should be updated from official sources for accuracy.</p>
-      <p>Source &amp; contribute on GitHub: <a href="https://github.com/Hgoyal701/VIRAT-18">Hgoyal701/VIRAT-18</a></p>
-    </section>
-
-    <footer class="site-footer">
-      <div>© <span id="year"></span> Fan site • Built from the VIRAT-18 repo</div>
-    </footer>
   </main>
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" aria-hidden="true">
-    <div class="lightbox-inner" role="dialog" aria-modal="true">
-      <button id="lightbox-close" class="lightbox-close" aria-label="Close">✕</button>
-      <img id="lightbox-img" src="" alt="">
-      <div id="lightbox-caption" class="lightbox-caption"></div>
-    </div>
-  </div>
-
-  <script src="assets/js/script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
