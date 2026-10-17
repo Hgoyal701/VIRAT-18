@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelectorAll('.side-nav a');
   const sections = [...document.querySelectorAll('header[id], main section[id]')];
 
-  function updateActiveNav() {
+  const updateActiveNav = () => {
     const scrollPosition = window.scrollY + 160;
     let activeId = 'hero';
 
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetId = link.getAttribute('href')?.replace('#', '');
       link.classList.toggle('active', targetId === activeId);
     });
-  }
+  };
 
   window.addEventListener('scroll', updateActiveNav, { passive: true });
   updateActiveNav();
@@ -47,10 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const counters = document.querySelectorAll('.num');
-
   const animateCounter = (element) => {
     const target = Number(element.dataset.target || 0);
-    const duration = 1200;
+    const duration = 1400;
     const startTime = performance.now();
 
     const tick = (currentTime) => {
@@ -69,14 +68,50 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(tick);
   };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        observer.unobserve(entry.target);
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.55 });
+
+    counters.forEach((counter) => observer.observe(counter));
+  } else {
+    counters.forEach((counter) => animateCounter(counter));
+  }
+
+  const galleryItems = document.querySelectorAll('.gallery-item img');
+  const lightbox = document.getElementById('lightbox');
+
+  if (galleryItems.length && lightbox) {
+    const lightboxImage = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeBtn = document.getElementById('lightbox-close');
+
+    galleryItems.forEach((img) => {
+      img.addEventListener('click', () => {
+        if (!lightboxImage || !lightboxCaption) return;
+        lightboxImage.src = img.dataset.full || img.src;
+        lightboxImage.alt = img.alt || '';
+        lightboxCaption.textContent = img.closest('.gallery-item')?.querySelector('figcaption')?.textContent || '';
+        lightbox.classList.add('show');
+        lightbox.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      lightbox.classList.remove('show');
+      lightbox.setAttribute('aria-hidden', 'true');
+    });
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        lightbox.classList.remove('show');
+        lightbox.setAttribute('aria-hidden', 'true');
       }
     });
-  }, { threshold: 0.5 });
-
-  counters.forEach((counter) => observer.observe(counter));
+  }
 });
