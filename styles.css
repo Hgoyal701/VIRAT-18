@@ -42,7 +42,7 @@ body {
 
 .container { width: min(1140px, calc(100% - 48px)); margin: 0 auto; }
 
-/* Keep glass-card behavior but adapt colors */
+/* Glass card base (used across the site) */
 .glass-card {
   background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border: 1px solid var(--border);
@@ -59,9 +59,19 @@ body {
 }
 .logo { font-family: "Orbitron", sans-serif; font-size: 0.82rem; letter-spacing: 0.22em; color: var(--india-blue); font-weight:700; }
 .side-nav { display:flex; flex-direction:column; gap:12px; }
-.side-nav a { width:46px; height:46px; display:grid; place-items:center; border-radius:12px; color:var(--muted); background:transparent; transition: all 0.18s ease; }
-.side-nav a.active, .side-nav a:hover { transform: translateY(-2px); background: linear-gradient(180deg, rgba(8,48,107,0.08), rgba(255,59,59,0.06)); color: var(--india-blue); box-shadow: 0 12px 30px rgba(8,48,107,0.08); }
-.sidebar-footer button { width:42px; height:42px; border-radius:10px; border:1px solid var(--border); background: rgba(255,255,255,0.02); cursor:pointer; }
+.side-nav a {
+  width:46px; height:46px; display:grid; place-items:center; border-radius:12px; color:var(--muted);
+  background:transparent; transition: all 0.18s ease;
+}
+.side-nav a.active, .side-nav a:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, rgba(8,48,107,0.08), rgba(255,59,59,0.06));
+  color: var(--india-blue);
+  box-shadow: 0 12px 30px rgba(8,48,107,0.08);
+}
+.sidebar-footer button {
+  width:42px; height:42px; border-radius:10px; border:1px solid var(--border); background: rgba(255,255,255,0.02); cursor:pointer;
+}
 
 /* Hero */
 .hero { position:relative; padding: 84px 0 60px 120px; }
@@ -69,6 +79,10 @@ body {
 .eyebrow, .section-tag { margin:0 0 12px; font-size:0.76rem; letter-spacing:0.18em; color: var(--india-blue); font-weight:700; }
 .hero-left h1 { margin:0; font-family: "Orbitron", sans-serif; font-size: clamp(3rem, 5.6vw, 4.8rem); color: #052144; }
 .lead { color: var(--india-blue); opacity:0.9; max-width:520px; line-height:1.7; margin-top:12px; }
+
+.cta { display:flex; flex-wrap:wrap; gap:14px; margin-top:26px; }
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:0 22px; border-radius:14px; font-weight:700; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.btn:hover { transform: translateY(-2px); }
 
 .btn.primary { background: linear-gradient(90deg, var(--india-blue), var(--rcb-red)); color: white; box-shadow: 0 18px 36px rgba(8,48,107,0.12); }
 .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--india-blue); }
@@ -85,7 +99,10 @@ body {
 .section-grid { display:grid; grid-template-columns: 1.25fr 0.75fr; gap:22px; }
 .info-panel { padding:18px; }
 .info-panel div { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); color:var(--india-blue); }
+.info-panel div:last-child { border-bottom: none; }
+.info-panel strong { color: var(--text); }
 
+/* Timeline / Achievements */
 .timeline { display:flex; flex-direction:column; gap:18px; margin-top:14px; }
 .event { display:grid; grid-template-columns: 110px 1fr; gap:18px; }
 .date { display:flex; align-items:center; justify-content:center; min-height:86px; border-radius:12px; background: rgba(116,185,255,0.12); color: var(--india-blue); font-weight:800; font-family: "Orbitron", sans-serif; }
@@ -93,8 +110,10 @@ body {
 .event-body h3 { margin:0 0 8px; color: #052144; }
 .event-body p { margin: 0; color: var(--muted); }
 
+/* Awards list */
 .award-list { margin-top:20px; padding:18px; border-radius:12px; border:1px solid var(--border); background: rgba(255,255,255,0.02); }
 .award-list h3 { margin-top:0; }
+.award-list ul { margin:0; padding-left:18px; color:var(--muted); }
 
 /* Stats */
 .grid-stats { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:18px; margin-top:18px; }
@@ -111,8 +130,6 @@ body {
 .gallery-item:hover img { transform: scale(1.06); }
 .gallery-item figcaption { position:absolute; left:12px; bottom:12px; padding:8px 10px; border-radius:10px; background: linear-gradient(90deg, rgba(8,48,107,0.6), rgba(255,59,59,0.18)); color:#fff; font-weight:700; }
 
-.caption { margin-top:14px; color: var(--muted); }
-
 /* Lightbox */
 .lightbox { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(2,8,15,0.8); z-index:120; }
 .lightbox.show { display:flex; }
@@ -120,7 +137,23 @@ body {
 #lightbox-close { position:absolute; top:18px; right:22px; width:44px; height:44px; border-radius:12px; border:1px solid var(--border); background: rgba(255,255,255,0.02); color:#fff; }
 #lightbox-caption { position:absolute; bottom:20px; color:#fff; font-weight:700; }
 
+/* Footer */
 .footer { display:flex; justify-content:space-between; align-items:center; color:var(--muted); padding:22px 30px 40px; }
 
-@media (max-width:980px) { .sidebar { left:10px; width:64px; } .hero { padding-left:88px; } .hero-inner, .section-grid { grid-template-columns: 1fr; } .hero-right { order:-1; } .gallery { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid-stats, .sub-grid-stats { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-@media (max-width:620px) { .sidebar { display:none; } .hero { padding-left:20px; padding-top:36px; } .container { width: calc(100% - 24px); } .event { grid-template-columns: 1fr; } .gallery, .grid-stats, .sub-grid-stats { grid-template-columns: 1fr; } .footer { flex-direction:column; text-align:center; } }
+/* Responsive */
+@media (max-width:980px) {
+  .sidebar { left:10px; width:64px; }
+  .hero { padding-left:88px; }
+  .hero-inner, .section-grid { grid-template-columns: 1fr; }
+  .hero-right { order:-1; }
+  .gallery { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .grid-stats, .sub-grid-stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width:620px) {
+  .sidebar { display:none; }
+  .hero { padding-left:20px; padding-top:36px; }
+  .container { width: calc(100% - 24px); }
+  .event { grid-template-columns: 1fr; }
+  .gallery, .grid-stats, .sub-grid-stats { grid-template-columns: 1fr; }
+  .footer { flex-direction:column; text-align:center; }
+}
