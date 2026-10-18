@@ -1,8 +1,16 @@
 import './styles.css'
 import metadata from '../metadata.json'
 
-// Use local assets if present (metadata may reference /src/assets/imageX.jpg)
+// Use local assets if present (metadata may reference /assets/imageX.jpg)
 const gallery: string[] = Array.isArray((metadata as any).gallery) ? (metadata as any).gallery : []
+
+// fallback remote images (used when local files 404)
+const FALLBACKS = [
+  'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1505842465776-3d1a1d1a1a1a?auto=format&fit=crop&w=800&q=80'
+]
 
 // Enhanced Canvas background for a lively wallpaper: moving color blobs + particle network + parallax
 function createCanvasBG(){
@@ -95,9 +103,14 @@ function createCanvasBG(){
 
       const grd = ctx.createRadialGradient(b.x+px, b.y+py, b.r*0.05, b.x+px, b.y+py, b.r)
       // subtle stops for soft glow
-      grd.addColorStop(0, b.color.replace(/,[^,]+\)/, ',1)'))
-      grd.addColorStop(0.25, b.color)
-      grd.addColorStop(1, b.color.replace(/,[^,]+\)/, ',0)'))
+      try{
+        grd.addColorStop(0, b.color.replace(/,[^,]+\)/, ',1)'))
+        grd.addColorStop(0.25, b.color)
+        grd.addColorStop(1, b.color.replace(/,[^,]+\)/, ',0)'))
+      }catch(e){
+        grd.addColorStop(0, b.color)
+        grd.addColorStop(1, b.color)
+      }
 
       ctx.fillStyle = grd
       ctx.beginPath()
@@ -174,7 +187,7 @@ function createHero(){
   section.id = 'home'
   section.className = 'hero'
 
-  const heroImg = gallery[0] || 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80'
+  const heroImg = gallery[0] || FALLBACKS[0]
 
   section.innerHTML = `
     <div class="hero-text">
@@ -308,7 +321,8 @@ function createStats(){
   return s
 }
 
-function createGallery(){
+// New: createGallery performs runtime checks for each image and falls back to remote images when a local file 404s
+async function createGallery(){
   const sec = document.createElement('section')
   sec.id = 'gallery'
   sec.className = 'section'
@@ -316,13 +330,37 @@ function createGallery(){
   const grid = document.createElement('div')
   grid.className = 'gallery-grid'
 
-  const imgs = gallery.length ? gallery : [
-    'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80'
-  ]
+  // helper to check if image loads
+  const checkImage = (url: string) => new Promise<string|null>((resolve)=>{
+    const img = new Image()
+    img.onload = () => resolve(url)
+    img.onerror = () => resolve(null)
+    // trigger request
+    img.src = url
+  })
 
-  imgs.forEach((src, idx)=>{
+  const imgsToUse: string[] = []
+
+  // iterate metadata gallery and validate each URL; fallback to remote if unavailable
+  for(let i=0;i<Math.max(gallery.length, FALLBACKS.length); i++){
+    const candidate = gallery[i] || FALLBACKS[i % FALLBACKS.length]
+    try{
+      // ensure absolute path for local public assets (starts with /)
+      const testUrl = candidate
+      // check if the image exists
+      // await checkImage only in browsers; on server-side builds this won't run
+      const ok = await checkImage(testUrl)
+      if(ok) imgsToUse.push(ok)
+      else {
+        console.warn(`Image not reachable: ${testUrl} — using fallback`)
+        imgsToUse.push(FALLBACKS[i % FALLBACKS.length])
+      }
+    }catch(e){
+      imgsToUse.push(FALLBACKS[i % FALLBACKS.length])
+    }
+  }
+
+  imgsToUse.forEach((src, idx)=>{
     const img = document.createElement('img')
     img.src = src
     img.alt = `player-${idx+1}`
@@ -340,7 +378,7 @@ function createFooter(){
   return f
 }
 
-function mount(){
+async function mount(){
   createCanvasBG()
   const app = document.getElementById('app')!
   app.innerHTML = ''
@@ -357,7 +395,7 @@ function mount(){
   main.appendChild(createCareer())
   main.appendChild(createAchievements())
   main.appendChild(createStats())
-  main.appendChild(createGallery())
+  main.appendChild(await createGallery())
 
   wrapper.appendChild(main)
   // add footer at the bottommost part
