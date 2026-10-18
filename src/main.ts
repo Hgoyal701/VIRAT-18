@@ -4,8 +4,11 @@ import metadata from '../metadata.json'
 // Use local assets if present (metadata may reference /src/assets/imageX.jpg)
 const gallery: string[] = Array.isArray((metadata as any).gallery) ? (metadata as any).gallery : []
 
-// Canvas background for particles
+// Enhanced Canvas background for a lively wallpaper: moving color blobs + particle network + parallax
 function createCanvasBG(){
+  const existing = document.getElementById('bgCanvas') as HTMLCanvasElement | null
+  if(existing) return
+
   const canvas = document.createElement('canvas')
   canvas.id = 'bgCanvas'
   canvas.style.position = 'fixed'
@@ -15,15 +18,24 @@ function createCanvasBG(){
   canvas.style.height = '100%'
   canvas.style.zIndex = '0'
   canvas.style.pointerEvents = 'none'
+  canvas.style.filter = 'blur(18px)'
+  canvas.style.opacity = '0.95'
   document.body.appendChild(canvas)
 
   const ctx = canvas.getContext('2d')!
   let w = 0, h = 0, DPR = Math.max(1, window.devicePixelRatio || 1)
+
+  // blobs for colorful moving gradients
+  const blobs: {x:number;y:number;vx:number;vy:number;r:number;color:string;phase:number}[] = []
+  // particles for network
   const particles: {x:number;y:number;vx:number;vy:number;r:number}[] = []
 
+  let mouseX = 0, mouseY = 0
+  const parallaxFactor = 30 // how much the mouse moves the background blobs
+
   function resize(){
-    w = Math.max(300, window.innerWidth)
-    h = Math.max(300, window.innerHeight)
+    w = Math.max(320, window.innerWidth)
+    h = Math.max(320, window.innerHeight)
     canvas.width = Math.floor(w * DPR)
     canvas.height = Math.floor(h * DPR)
     canvas.style.width = w + 'px'
@@ -31,24 +43,70 @@ function createCanvasBG(){
     ctx.setTransform(DPR,0,0,DPR,0,0)
   }
 
-  function initParticles(){
+  function init(){
+    blobs.length = 0
     particles.length = 0
-    const count = Math.round((w*h) / 90000)
-    for(let i=0;i<count;i++){
-      particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:Math.random()*1.8+0.6})
+
+    const bcount = Math.max(3, Math.round((w*h)/600000))
+    const palette = ['rgba(155,92,255,0.45)','rgba(255,45,85,0.38)','rgba(0,240,255,0.28)','rgba(255,140,50,0.18)']
+    for(let i=0;i<bcount;i++){
+      blobs.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        vx: (Math.random()-0.5)*0.2,
+        vy: (Math.random()-0.5)*0.2,
+        r: Math.max(w,h)* (0.18 + Math.random()*0.18),
+        color: palette[i % palette.length],
+        phase: Math.random()*Math.PI*2
+      })
+    }
+
+    const pcount = Math.round((w*h) / 80000)
+    for(let i=0;i<pcount;i++){
+      particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*1.6+0.4})
     }
   }
 
-  function draw(){
-    ctx.clearRect(0,0,w,h)
-    // subtle gradient overlay
-    const g = ctx.createLinearGradient(0,0,w,h)
-    g.addColorStop(0,'rgba(155,92,255,0.02)')
-    g.addColorStop(1,'rgba(0,240,255,0.02)')
-    ctx.fillStyle = g
-    ctx.fillRect(0,0,w,h)
+  window.addEventListener('mousemove', (e)=>{ mouseX = e.clientX; mouseY = e.clientY })
+  window.addEventListener('resize', ()=>{ resize(); init() })
+  resize(); init()
 
-    // particles
+  let t = 0
+  function draw(){
+    t += 0.01
+    // clear
+    ctx.clearRect(0,0,w,h)
+
+    // moving blob layer (additive)
+    ctx.globalCompositeOperation = 'screen'
+    for(const b of blobs){
+      // gentle movement + phase bob
+      b.x += b.vx + Math.sin(t + b.phase)*0.05
+      b.y += b.vy + Math.cos(t + b.phase)*0.05
+      // wrap
+      if(b.x < -b.r) b.x = w + b.r
+      if(b.x > w + b.r) b.x = -b.r
+      if(b.y < -b.r) b.y = h + b.r
+      if(b.y > h + b.r) b.y = -b.r
+
+      // parallax offset based on mouse
+      const px = (mouseX - w/2)/w * parallaxFactor
+      const py = (mouseY - h/2)/h * parallaxFactor
+
+      const grd = ctx.createRadialGradient(b.x+px, b.y+py, b.r*0.05, b.x+px, b.y+py, b.r)
+      // subtle stops for soft glow
+      grd.addColorStop(0, b.color.replace(/,[^,]+\)/, ',1)'))
+      grd.addColorStop(0.25, b.color)
+      grd.addColorStop(1, b.color.replace(/,[^,]+\)/, ',0)'))
+
+      ctx.fillStyle = grd
+      ctx.beginPath()
+      ctx.arc(b.x+px, b.y+py, b.r, 0, Math.PI*2)
+      ctx.fill()
+    }
+
+    // particle network on top
+    ctx.globalCompositeOperation = 'lighter'
     for(const p of particles){
       p.x += p.vx
       p.y += p.vy
@@ -59,6 +117,7 @@ function createCanvasBG(){
     }
 
     // draw connections
+    ctx.lineWidth = 0.6
     for(let i=0;i<particles.length;i++){
       const a = particles[i]
       for(let j=i+1;j<particles.length;j++){
@@ -67,8 +126,8 @@ function createCanvasBG(){
         const d = Math.sqrt(dx*dx+dy*dy)
         if(d<120){
           ctx.beginPath()
-          ctx.strokeStyle = 'rgba(0,255,255,'+ (0.08*(1-d/120)).toFixed(3) +')'
-          ctx.lineWidth = 0.6
+          const alpha = (1 - d/120) * 0.08
+          ctx.strokeStyle = `rgba(0,240,255,${alpha.toFixed(3)})`
           ctx.moveTo(a.x,a.y)
           ctx.lineTo(b.x,b.y)
           ctx.stroke()
@@ -76,21 +135,21 @@ function createCanvasBG(){
       }
     }
 
-    // draw particles
+    // draw particles with slight glow
     for(const p of particles){
       ctx.beginPath()
-      ctx.fillStyle = 'rgba(255,255,255,0.9)'
-      ctx.globalCompositeOperation = 'lighter'
+      ctx.fillStyle = 'rgba(255,255,255,0.95)'
       ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
       ctx.fill()
-      ctx.globalCompositeOperation = 'source-over'
     }
 
+    // subtle vignette overlay
+    ctx.globalCompositeOperation = 'source-over'
+    ctx.fillStyle = 'rgba(0,0,0,0)'
     requestAnimationFrame(draw)
   }
 
-  window.addEventListener('resize', ()=>{ resize(); initParticles() })
-  resize(); initParticles(); draw()
+  draw()
 }
 
 function createSidebar(){
