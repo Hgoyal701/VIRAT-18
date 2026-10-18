@@ -13,8 +13,9 @@
     "t20is": { "matches": 125, "runs": 4188, "avg": 48.69, "hundreds": 1, "highest": "122*" }
   },
   "gallery": [
-    "/src/assets/image1.jpg",
-    "/src/assets/image2.jpg",
-    "/src/assets/image3.jpg"
+    "/src/assets/image4.jpg",
+    "/src/assets/image5.jpg",
+    "/src/assets/image6.jpg",
+    "/src/assets/image7.jpg"
   ]
 }
