@@ -1,0 +1,16 @@
+{
+  "title": "Virat Kohli | Career, Stats & Achievements",
+  "hero": {
+    "headline": "Virat Kohli",
+    "tagline": "One of the greatest modern batsmen in cricket, known for chase-master performances and consistency."
+  },
+  "stats": {
+    "internationalRuns": 25000,
+    "internationalCenturies": 80,
+    "odisPlayed": 300,
+    "tests": { "matches": 120, "runs": 9500, "avg": 50.1, "hundreds": 30 },
+    "odis": { "matches": 300, "runs": 14000, "avg": 57.0, "hundreds": 50 },
+    "t20is": { "matches": 125, "runs": 4200, "avg": 50.0, "hundreds": 1 }
+  },
+  "gallery": ["/src/assets/image1.jpg", "/src/assets/image2.jpg", "/src/assets/image3.jpg"]
+}
