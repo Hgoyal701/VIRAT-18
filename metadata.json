@@ -5,16 +5,16 @@
     "tagline": "One of the greatest modern batsmen in cricket, known for chase-master performances and consistency."
   },
   "stats": {
-    "internationalRuns": 25000,
-    "internationalCenturies": 80,
-    "odisPlayed": 300,
-    "tests": { "matches": 120, "runs": 9500, "avg": 50.1, "hundreds": 30 },
-    "odis": { "matches": 300, "runs": 14000, "avg": 57.0, "hundreds": 50 },
-    "t20is": { "matches": 125, "runs": 4200, "avg": 50.0, "hundreds": 1 }
+    "internationalRuns": 28527,
+    "internationalCenturies": 86,
+    "odisPlayed": 317,
+    "tests": { "matches": 123, "runs": 9230, "avg": 46.85, "hundreds": 30, "highest": "254*" },
+    "odis": { "matches": 317, "runs": 15109, "avg": 58.78, "hundreds": 55, "highest": 183 },
+    "t20is": { "matches": 125, "runs": 4188, "avg": 48.69, "hundreds": 1, "highest": "122*" }
   },
   "gallery": [
-    "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80"
+    "/src/assets/image1.jpg",
+    "/src/assets/image2.jpg",
+    "/src/assets/image3.jpg"
   ]
 }
