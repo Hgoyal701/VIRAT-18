@@ -1,12 +1,8 @@
 import './styles.css'
 import metadata from '../metadata.json'
 
-// Images are referenced via metadata.gallery; import them so Vite bundles them
-import image1 from './assets/image1.jpg'
-import image2 from './assets/image2.jpg'
-import image3 from './assets/image3.jpg'
-
-const images = [image1, image2, image3]
+// Using remote image URLs from metadata so build doesn't fail when local assets are absent
+const gallery: string[] = Array.isArray((metadata as any).gallery) ? (metadata as any).gallery : []
 
 function createSidebar(){
   const aside = document.createElement('aside')
@@ -30,11 +26,13 @@ function createHero(){
   section.id = 'home'
   section.className = 'hero'
 
+  const heroImg = gallery[0] || 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80'
+
   section.innerHTML = `
     <div class="hero-text">
       <p class="eyebrow">THE CHASE MASTER</p>
-      <h1>${metadata.hero.headline}</h1>
-      <p>${metadata.hero.tagline}</p>
+      <h1>${(metadata as any).hero.headline}</h1>
+      <p>${(metadata as any).hero.tagline}</p>
       <div class="cta-row">
         <a href="#stats" class="primary-btn">View Stats</a>
         <a href="#career" class="secondary-btn">Career Timeline</a>
@@ -42,7 +40,7 @@ function createHero(){
     </div>
     <div class="hero-visual">
       <div class="player-card">
-        <img id="heroImg" src="${images[0]}" alt="player" />
+        <img id="heroImg" src="${heroImg}" alt="player" />
       </div>
     </div>
   `
@@ -118,28 +116,46 @@ function createStats(){
       </table>
     </div>
   `
-  // fill numbers from metadata
-  setTimeout(()=>{
-    (document.getElementById('runsCount') as HTMLElement).textContent = String(metadata.stats.internationalRuns)
-    (document.getElementById('centuriesCount') as HTMLElement).textContent = String(metadata.stats.internationalCenturies)
-    (document.getElementById('odisCount') as HTMLElement).textContent = String(metadata.stats.odisPlayed)
 
-    (document.getElementById('testsMatches') as HTMLElement).textContent = String(metadata.stats.tests.matches)
-    (document.getElementById('testsRuns') as HTMLElement).textContent = String(metadata.stats.tests.runs)
-    (document.getElementById('testsAvg') as HTMLElement).textContent = String(metadata.stats.tests.avg)
-    (document.getElementById('tests100s') as HTMLElement).textContent = String(metadata.stats.tests.hundreds)
+  // fill numbers from metadata with a small animate counter
+  const fillStats = () => {
+    const stats: any = (metadata as any).stats || {}
+    const animate = (id: string, to: number) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      let start = 0
+      const duration = 900
+      const step = Math.ceil(to / (duration / 16))
+      const iv = setInterval(()=>{
+        start += step
+        if (start >= to){ el.textContent = String(to); clearInterval(iv) }
+        else el.textContent = String(start)
+      },16)
+    }
 
-    (document.getElementById('odisMatches') as HTMLElement).textContent = String(metadata.stats.odis.matches)
-    (document.getElementById('odisRuns') as HTMLElement).textContent = String(metadata.stats.odis.runs)
-    (document.getElementById('odisAvg') as HTMLElement).textContent = String(metadata.stats.odis.avg)
-    (document.getElementById('odis100s') as HTMLElement).textContent = String(metadata.stats.odis.hundreds)
+    animate('runsCount', stats.internationalRuns || 0)
+    animate('centuriesCount', stats.internationalCenturies || 0)
+    animate('odisCount', stats.odisPlayed || 0)
 
-    (document.getElementById('t20Matches') as HTMLElement).textContent = String(metadata.stats.t20is.matches)
-    (document.getElementById('t20Runs') as HTMLElement).textContent = String(metadata.stats.t20is.runs)
-    (document.getElementById('t20Avg') as HTMLElement).textContent = String(metadata.stats.t20is.avg)
-    (document.getElementById('t20100s') as HTMLElement).textContent = String(metadata.stats.t20is.hundreds)
+    const fill = (id: string, value: any) => { const el = document.getElementById(id); if (el) el.textContent = String(value ?? '-') }
 
-  }, 0)
+    fill('testsMatches', stats.tests?.matches)
+    fill('testsRuns', stats.tests?.runs)
+    fill('testsAvg', stats.tests?.avg)
+    fill('tests100s', stats.tests?.hundreds)
+
+    fill('odisMatches', stats.odis?.matches)
+    fill('odisRuns', stats.odis?.runs)
+    fill('odisAvg', stats.odis?.avg)
+    fill('odis100s', stats.odis?.hundreds)
+
+    fill('t20Matches', stats.t20is?.matches)
+    fill('t20Runs', stats.t20is?.runs)
+    fill('t20Avg', stats.t20is?.avg)
+    fill('t20100s', stats.t20is?.hundreds)
+  }
+
+  setTimeout(fillStats, 50)
 
   return s
 }
@@ -152,7 +168,15 @@ function createGallery(){
   const grid = document.createElement('div')
   grid.className = 'gallery-grid'
 
-  images.forEach((src)=>{
+  const fallback = [
+    'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80'
+  ]
+
+  const imgs = gallery.length ? gallery : fallback
+
+  imgs.forEach((src)=>{
     const img = document.createElement('img')
     img.src = src
     img.alt = 'player'
@@ -165,6 +189,7 @@ function createGallery(){
 
 function mount(){
   const app = document.getElementById('app')!
+  app.innerHTML = ''
   const wrapper = document.createElement('div')
   wrapper.className = 'app'
 

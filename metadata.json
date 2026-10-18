@@ -12,5 +12,9 @@
     "odis": { "matches": 300, "runs": 14000, "avg": 57.0, "hundreds": 50 },
     "t20is": { "matches": 125, "runs": 4200, "avg": 50.0, "hundreds": 1 }
   },
-  "gallery": ["/src/assets/image1.jpg", "/src/assets/image2.jpg", "/src/assets/image3.jpg"]
+  "gallery": [
+    "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80"
+  ]
 }
