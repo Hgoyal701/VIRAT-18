@@ -1,8 +1,97 @@
 import './styles.css'
 import metadata from '../metadata.json'
 
-// Using remote image URLs from metadata so build doesn't fail when local assets are absent
+// Use local assets if present (metadata may reference /src/assets/imageX.jpg)
 const gallery: string[] = Array.isArray((metadata as any).gallery) ? (metadata as any).gallery : []
+
+// Canvas background for particles
+function createCanvasBG(){
+  const canvas = document.createElement('canvas')
+  canvas.id = 'bgCanvas'
+  canvas.style.position = 'fixed'
+  canvas.style.left = '0'
+  canvas.style.top = '0'
+  canvas.style.width = '100%'
+  canvas.style.height = '100%'
+  canvas.style.zIndex = '0'
+  canvas.style.pointerEvents = 'none'
+  document.body.appendChild(canvas)
+
+  const ctx = canvas.getContext('2d')!
+  let w = 0, h = 0, DPR = Math.max(1, window.devicePixelRatio || 1)
+  const particles: {x:number;y:number;vx:number;vy:number;r:number}[] = []
+
+  function resize(){
+    w = Math.max(300, window.innerWidth)
+    h = Math.max(300, window.innerHeight)
+    canvas.width = Math.floor(w * DPR)
+    canvas.height = Math.floor(h * DPR)
+    canvas.style.width = w + 'px'
+    canvas.style.height = h + 'px'
+    ctx.setTransform(DPR,0,0,DPR,0,0)
+  }
+
+  function initParticles(){
+    particles.length = 0
+    const count = Math.round((w*h) / 90000)
+    for(let i=0;i<count;i++){
+      particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:Math.random()*1.8+0.6})
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,w,h)
+    // subtle gradient overlay
+    const g = ctx.createLinearGradient(0,0,w,h)
+    g.addColorStop(0,'rgba(155,92,255,0.02)')
+    g.addColorStop(1,'rgba(0,240,255,0.02)')
+    ctx.fillStyle = g
+    ctx.fillRect(0,0,w,h)
+
+    // particles
+    for(const p of particles){
+      p.x += p.vx
+      p.y += p.vy
+      if(p.x<0) p.x = w
+      if(p.x> w) p.x = 0
+      if(p.y<0) p.y = h
+      if(p.y> h) p.y = 0
+    }
+
+    // draw connections
+    for(let i=0;i<particles.length;i++){
+      const a = particles[i]
+      for(let j=i+1;j<particles.length;j++){
+        const b = particles[j]
+        const dx = a.x-b.x, dy = a.y-b.y
+        const d = Math.sqrt(dx*dx+dy*dy)
+        if(d<120){
+          ctx.beginPath()
+          ctx.strokeStyle = 'rgba(0,255,255,'+ (0.08*(1-d/120)).toFixed(3) +')'
+          ctx.lineWidth = 0.6
+          ctx.moveTo(a.x,a.y)
+          ctx.lineTo(b.x,b.y)
+          ctx.stroke()
+        }
+      }
+    }
+
+    // draw particles
+    for(const p of particles){
+      ctx.beginPath()
+      ctx.fillStyle = 'rgba(255,255,255,0.9)'
+      ctx.globalCompositeOperation = 'lighter'
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+      ctx.fill()
+      ctx.globalCompositeOperation = 'source-over'
+    }
+
+    requestAnimationFrame(draw)
+  }
+
+  window.addEventListener('resize', ()=>{ resize(); initParticles() })
+  resize(); initParticles(); draw()
+}
 
 function createSidebar(){
   const aside = document.createElement('aside')
@@ -31,9 +120,9 @@ function createHero(){
   section.innerHTML = `
     <div class="hero-text">
       <p class="eyebrow">THE CHASE MASTER</p>
-      <h1>${(metadata as any).hero.headline}</h1>
-      <p>${(metadata as any).hero.tagline}</p>
-      <div class="cta-row">
+      <h1 class="glitch" data-text="${(metadata as any).hero.headline}"><span>${(metadata as any).hero.headline}</span></h1>
+      <p style="color:var(--muted)">${(metadata as any).hero.tagline}</p>
+      <div class="cta-row" style="margin-top:14px">
         <a href="#stats" class="primary-btn">View Stats</a>
         <a href="#career" class="secondary-btn">Career Timeline</a>
       </div>
@@ -47,6 +136,7 @@ function createHero(){
   return section
 }
 
+// rest of components unchanged but enhanced by styles
 function createCareer(){
   const sec = document.createElement('section')
   sec.id = 'career'
@@ -117,7 +207,6 @@ function createStats(){
     </div>
   `
 
-  // fill numbers from metadata with a small animate counter
   const fillStats = () => {
     const stats: any = (metadata as any).stats || {}
     const animate = (id: string, to: number) => {
@@ -168,18 +257,16 @@ function createGallery(){
   const grid = document.createElement('div')
   grid.className = 'gallery-grid'
 
-  const fallback = [
+  const imgs = gallery.length ? gallery : [
     'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80'
   ]
 
-  const imgs = gallery.length ? gallery : fallback
-
-  imgs.forEach((src)=>{
+  imgs.forEach((src, idx)=>{
     const img = document.createElement('img')
     img.src = src
-    img.alt = 'player'
+    img.alt = `player-${idx+1}`
     grid.appendChild(img)
   })
 
@@ -188,10 +275,13 @@ function createGallery(){
 }
 
 function mount(){
+  createCanvasBG()
   const app = document.getElementById('app')!
   app.innerHTML = ''
   const wrapper = document.createElement('div')
   wrapper.className = 'app'
+  wrapper.style.position = 'relative'
+  wrapper.style.zIndex = '3'
 
   wrapper.appendChild(createSidebar())
 
@@ -207,9 +297,8 @@ function mount(){
   app.appendChild(wrapper)
 
   // theme toggle (very small)
-  document.getElementById('themeToggle')!.addEventListener('click', ()=>{
-    document.documentElement.classList.toggle('light')
-  })
+  const tbtn = document.getElementById('themeToggle')
+  if(tbtn){ tbtn.addEventListener('click', ()=>{ document.documentElement.classList.toggle('light') }) }
 }
 
 mount()
