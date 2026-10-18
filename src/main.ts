@@ -274,6 +274,13 @@ function createGallery(){
   return sec
 }
 
+function createFooter(){
+  const f = document.createElement('footer')
+  f.className = 'site-footer'
+  f.innerHTML = `<div>crafted with ⚡ by <span class="credit">Dodo</span></div>`
+  return f
+}
+
 function mount(){
   createCanvasBG()
   const app = document.getElementById('app')!
@@ -294,6 +301,9 @@ function mount(){
   main.appendChild(createGallery())
 
   wrapper.appendChild(main)
+  // add footer at the bottommost part
+  wrapper.appendChild(createFooter())
+
   app.appendChild(wrapper)
 
   // theme toggle (very small)
