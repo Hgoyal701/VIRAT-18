@@ -238,20 +238,84 @@ function createShowcaseBanner(){
   return sec
 }
 
-// rest of components unchanged but enhanced by styles
 function createCareer(){
+  const events = [
+    {
+      year: '2006',
+      label: 'Junior Breakthrough',
+      title: 'U19 India and early promise',
+      description: 'Virat Kohli started to stand out as a highly talented young batter, showing the temperament and technique that would later define his international career.'
+    },
+    {
+      year: '2008',
+      label: 'International Debut',
+      title: 'India call-up',
+      description: 'He made his international debut and began the climb toward becoming a dependable performer in India’s batting line-up across formats.'
+    },
+    {
+      year: '2011',
+      label: 'World Cup Impact',
+      title: 'ICC Cricket World Cup',
+      description: 'Kohli’s rise continued through the 2011 World Cup, where he gave India critical batting depth and confidence in pressure moments.'
+    },
+    {
+      year: '2013',
+      label: 'Global Star',
+      title: 'The modern batting era',
+      description: 'He established himself as one of the world’s premier run-scorers and became the face of India’s aggressive middle-order batting.'
+    },
+    {
+      year: '2016',
+      label: 'Captaincy',
+      title: 'India Test captaincy era',
+      description: 'As captain, Kohli transformed India into a fearless, high-intensity team that played with greater aggression and intent across conditions.'
+    },
+    {
+      year: '2018',
+      label: 'BGT Masterclass',
+      title: 'Border-Gavaskar Trophy heroics',
+      description: 'His performances in Australia under pressure cemented his reputation as a world-class overseas batter, especially in difficult conditions.'
+    },
+    {
+      year: '2021',
+      label: 'T20 World Cup',
+      title: 'Leadership and batting class',
+      description: 'Kohli remained one of the most feared T20 batters globally, continuing to lead from the front with his power, shot selection, and chase control.'
+    },
+    {
+      year: '2022',
+      label: 'Record Breaker',
+      title: 'Run-scoring dominance',
+      description: 'He continued dominating ODI and Test cricket with remarkable consistency, keeping his standards at an elite level.'
+    },
+    {
+      year: '2025',
+      label: 'Legend Status',
+      title: 'Modern cricket great',
+      description: 'Even in the modern era, Kohli is still regarded as one of cricket’s strongest competitors, admired for fitness, temperament, and chase-winning ability.'
+    }
+  ]
+
   const sec = document.createElement('section')
   sec.id = 'career'
   sec.className = 'section'
   sec.innerHTML = `
-    <h2>Career Timeline</h2>
-    <div class="timeline">
-      <div class="timeline-item"><span>2006</span><p>ODI debut for India</p></div>
-      <div class="timeline-item"><span>2008</span><p>International breakthrough</p></div>
-      <div class="timeline-item"><span>2011</span><p>Important World Cup role</p></div>
-      <div class="timeline-item"><span>2013</span><p>Backbone of India’s batting</p></div>
-      <div class="timeline-item"><span>2016</span><p>Historic Test performances & captaincy</p></div>
-      <div class="timeline-item"><span>2018+</span><p>Peak form across formats</p></div>
+    <div class="section-heading">
+      <p class="section-tag">Career Journey</p>
+      <h2>Timeline</h2>
+    </div>
+    <div class="career-timeline">
+      ${events.map((event, index) => `
+        <div class="timeline-entry ${index % 2 === 0 ? 'left' : 'right'}">
+          <div class="timeline-card">
+            <div class="timeline-year">${event.year}</div>
+            <div class="timeline-label">${event.label}</div>
+            <h3>${event.title}</h3>
+            <p>${event.description}</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      `).join('')}
     </div>
   `
   return sec
@@ -351,7 +415,6 @@ function createStats(){
   return s
 }
 
-// New: createGallery performs runtime checks for each image and falls back to remote images when a local file 404s
 async function createGallery(){
   const sec = document.createElement('section')
   sec.id = 'gallery'
@@ -360,29 +423,22 @@ async function createGallery(){
   const grid = document.createElement('div')
   grid.className = 'gallery-grid'
 
-  // helper to check if image loads
   const checkImage = (url: string) => new Promise<string|null>((resolve)=>{
     const img = new Image()
     img.onload = () => resolve(url)
     img.onerror = () => resolve(null)
-    // trigger request
     img.src = url
   })
 
   const imgsToUse: string[] = []
 
-  // iterate metadata gallery and validate each URL; fallback to remote if unavailable
   for(let i=0;i<Math.max(gallery.length, FALLBACKS.length); i++){
     const candidate = gallery[i] || FALLBACKS[i % FALLBACKS.length]
     try{
-      // ensure absolute path for local public assets (starts with /)
-      const testUrl = candidate
-      // check if the image exists
-      // await checkImage only in browsers; on server-side builds this won't run
-      const ok = await checkImage(testUrl)
+      const ok = await checkImage(candidate)
       if(ok) imgsToUse.push(ok)
       else {
-        console.warn(`Image not reachable: ${testUrl} — using fallback`)
+        console.warn(`Image not reachable: ${candidate} — using fallback`)
         imgsToUse.push(FALLBACKS[i % FALLBACKS.length])
       }
     }catch(e){
