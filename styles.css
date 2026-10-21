@@ -1,25 +1,25 @@
 :root {
-  --bg: #07111d;
-  --bg-soft: #0e1a2d;
+  --bg: #0b1117;
+  --bg-soft: #121d2a;
   --card: rgba(17, 28, 42, 0.9);
   --card-2: rgba(22, 38, 55, 0.9);
   --text: #edf4ff;
   --muted: #a7b9d6;
-  --accent: #2a7fff;
-  --accent-2: #ff8a00;
+  --accent: #d91c26;
+  --accent-2: #f2c76e;
   --shadow: rgba(0, 0, 0, 0.35);
   --border: rgba(255, 255, 255, 0.08);
 }
 
 :root.light {
-  --bg: #edf4ff;
-  --bg-soft: #dfeaff;
+  --bg: #f5f7fb;
+  --bg-soft: #edf3ff;
   --card: #ffffff;
-  --card-2: #f3f7ff;
-  --text: #0b1727;
-  --muted: #4b607d;
-  --accent: #1d5dff;
-  --accent-2: #ff7a00;
+  --card-2: #f4f8ff;
+  --text: #101a29;
+  --muted: #52657c;
+  --accent: #c00f1b;
+  --accent-2: #d7a831;
   --shadow: rgba(24, 52, 86, 0.12);
   --border: rgba(11, 23, 39, 0.08);
 }
@@ -34,65 +34,74 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, var(--bg), var(--bg-soft));
   color: var(--text);
-  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+a {
+  transition: all 0.2s ease;
 }
 
 .sidebar {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   width: 130px;
   height: 100vh;
-  background: rgba(10, 16, 27, 0.85);
-  border-right: 1px solid var(--border);
+  padding: 24px 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 14px;
+  background: rgba(10, 16, 27, 0.85);
+  border-right: 1px solid var(--border);
   backdrop-filter: blur(12px);
 }
 
 .brand {
+  margin-bottom: 32px;
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: 2px;
-  margin-bottom: 32px;
   color: var(--accent);
 }
 
 .nav {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 100%;
 }
 
 .nav a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 0.9rem;
   padding: 10px 12px;
   border-radius: 10px;
-  transition: 0.2s ease;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
 .nav a.active,
 .nav a:hover {
-  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .theme-btn {
   margin-top: auto;
+  padding: 10px;
   border: none;
   background: transparent;
   color: var(--text);
   font-size: 1.4rem;
   cursor: pointer;
-  padding: 10px;
 }
 
 .content {
@@ -109,50 +118,51 @@ body {
 }
 
 .eyebrow {
-  font-size: 0.8rem;
-  letter-spacing: 3px;
-  color: var(--accent-2);
   margin-bottom: 12px;
+  color: var(--accent-2);
+  letter-spacing: 3px;
+  font-size: 0.8rem;
 }
 
 .hero h1 {
+  margin: 0 0 18px;
   font-size: clamp(3rem, 6vw, 6rem);
   line-height: 0.95;
-  margin: 0 0 18px;
 }
 
 .hero-text p {
   max-width: 560px;
-  font-size: 1.1rem;
   color: var(--muted);
+  font-size: 1.1rem;
   line-height: 1.7;
 }
 
 .cta-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   margin-top: 24px;
 }
 
 .primary-btn,
 .secondary-btn {
-  text-decoration: none;
+  display: inline-block;
   padding: 14px 20px;
   border-radius: 12px;
+  text-decoration: none;
   font-weight: 600;
-  transition: 0.2s ease;
 }
 
 .primary-btn {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: linear-gradient(135deg, var(--accent), #ff5f6d);
   color: white;
-  box-shadow: 0 12px 24px rgba(42, 127, 255, 0.35);
+  box-shadow: 0 12px 24px rgba(217, 28, 38, 0.35);
 }
 
 .secondary-btn {
   color: var(--text);
   border: 1px solid var(--border);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .player-card {
@@ -175,8 +185,8 @@ body {
 }
 
 .section h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 24px;
+  font-size: clamp(2rem, 4vw, 3rem);
 }
 
 .timeline {
@@ -185,64 +195,46 @@ body {
   gap: 18px;
 }
 
-.timeline-item {
+.timeline-item,
+.card,
+.stat-box,
+.format-table {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
+  border-radius: 18px;
   box-shadow: 0 10px 28px var(--shadow);
 }
 
+.timeline-item {
+  padding: 18px;
+}
+
 .timeline-item span {
-  color: var(--accent-2);
-  font-weight: 800;
   display: inline-block;
   margin-bottom: 10px;
+  color: var(--accent-2);
+  font-weight: 800;
 }
 
-.timeline-item p {
+.timeline-item p,
+.card p,
+.stat-box label,
+td {
   color: var(--muted);
   line-height: 1.7;
-  margin: 0;
 }
 
-.cards {
+.cards,
+.stats-grid,
+.gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
 }
 
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow: 0 10px 28px var(--shadow);
-}
-
-.card h3 {
-  margin-top: 0;
-}
-
-.card p {
-  margin-bottom: 0;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 18px;
-}
-
+.card,
 .stat-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 10px 28px var(--shadow);
+  padding: 22px;
 }
 
 .num {
@@ -252,16 +244,9 @@ body {
   color: var(--accent);
 }
 
-.stat-box label {
-  color: var(--muted);
-}
-
 .format-table {
-  margin-top: 28px;
   overflow: hidden;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  box-shadow: 0 10px 28px var(--shadow);
+  margin-top: 28px;
 }
 
 table {
@@ -270,25 +255,16 @@ table {
   background: var(--card);
 }
 
-th, td {
+th,
+td {
   padding: 16px 18px;
-  border-bottom: 1px solid var(--border);
   text-align: left;
+  border-bottom: 1px solid var(--border);
 }
 
 th {
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   color: var(--text);
-}
-
-td {
-  color: var(--muted);
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
 }
 
 .gallery-grid img {
@@ -306,8 +282,8 @@ td {
     width: 100%;
     height: auto;
     flex-direction: row;
-    padding: 18px 20px;
     gap: 16px;
+    padding: 18px 20px;
   }
 
   .nav {
