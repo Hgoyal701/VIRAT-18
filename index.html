@@ -6,21 +6,21 @@
     <title>Virat Kohli | Career, Stats & Achievements</title>
     <meta
       name="description"
-      content="Virat Kohli career timeline, awards, and complete statistical overview."
+      content="Virat Kohli career timeline, records, and format-wise stats in an RCB-inspired design."
     />
     <style>
       :root {
-        --bg: #081522;
-        --bg-2: #102337;
-        --panel: rgba(255, 255, 255, 0.04);
-        --panel-strong: #0f2238;
-        --line: rgba(255, 255, 255, 0.08);
-        --text: #edf7ff;
-        --muted: #a8b8ca;
-        --blue: #5ca8ff;
-        --gold: #e7c76b;
-        --green: #78d49b;
-        --shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+        --bg: #12090a;
+        --bg-2: #1d0d0e;
+        --panel: rgba(255,255,255,0.04);
+        --line: rgba(255,255,255,0.08);
+        --text: #fff5f5;
+        --muted: #d4b3b5;
+        --red: #d91c26;
+        --red-2: #ff3d4d;
+        --maroon: #7d0d12;
+        --gold: #f2c76e;
+        --shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
       }
 
       * { box-sizing: border-box; }
@@ -29,8 +29,8 @@
         margin: 0;
         font-family: Arial, sans-serif;
         background:
-          radial-gradient(circle at top left, rgba(92,168,255,0.18), transparent 25%),
-          linear-gradient(180deg, var(--bg), #071119);
+          radial-gradient(circle at top left, rgba(217,28,38,0.25), transparent 30%),
+          linear-gradient(180deg, var(--bg), #0b0707);
         color: var(--text);
       }
 
@@ -42,8 +42,9 @@
       .topbar {
         position: sticky;
         top: 0;
+        z-index: 10;
         backdrop-filter: blur(10px);
-        background: rgba(8,21,34,0.8);
+        background: rgba(18, 9, 10, 0.82);
         border-bottom: 1px solid var(--line);
       }
 
@@ -59,19 +60,19 @@
         align-items: center;
         gap: 12px;
         font-weight: 700;
-        letter-spacing: 0.08em;
         text-transform: uppercase;
+        letter-spacing: 0.08em;
       }
 
       .brand-mark {
         width: 38px;
         height: 38px;
         border-radius: 50%;
-        background: linear-gradient(135deg, var(--blue), #bcdefb);
-        color: var(--bg);
         display: grid;
         place-items: center;
-        font-weight: 800;
+        background: linear-gradient(135deg, var(--red), var(--gold));
+        color: #12090a;
+        font-weight: 900;
       }
 
       .nav-links {
@@ -86,7 +87,7 @@
       }
 
       .hero {
-        padding: 56px 0 32px;
+        padding: 56px 0 30px;
       }
 
       .hero-grid {
@@ -98,13 +99,20 @@
 
       h1 {
         margin: 0;
-        font-size: clamp(2.8rem, 6vw, 5.2rem);
+        font-size: clamp(2.8rem, 6vw, 5rem);
         line-height: 0.94;
         letter-spacing: -0.06em;
       }
 
       .highlight {
-        color: var(--blue);
+        color: var(--red-2);
+      }
+
+      .kicker {
+        color: var(--gold);
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
       }
 
       .subtitle {
@@ -124,16 +132,16 @@
 
       .btn {
         display: inline-block;
+        text-decoration: none;
         padding: 14px 22px;
         border-radius: 999px;
-        text-decoration: none;
         font-weight: 700;
-        transition: 0.25s ease;
       }
 
       .btn.primary {
-        background: linear-gradient(135deg, var(--blue), #84c7ff);
-        color: #091e2d;
+        background: linear-gradient(135deg, var(--red), var(--red-2));
+        color: white;
+        box-shadow: 0 15px 30px rgba(217,28,38,0.3);
       }
 
       .btn.secondary {
@@ -163,11 +171,11 @@
       }
 
       .mini-label {
-        margin-top: 8px;
+        margin-top: 7px;
         color: var(--muted);
         font-size: 0.72rem;
-        text-transform: uppercase;
         letter-spacing: 0.1em;
+        text-transform: uppercase;
       }
 
       .hero-image-wrap {
@@ -187,7 +195,7 @@
         position: absolute;
         right: -12px;
         bottom: 18px;
-        background: rgba(8,21,34,0.86);
+        background: rgba(18,9,10,0.88);
         border: 1px solid var(--line);
         border-radius: 18px;
         padding: 16px;
@@ -197,8 +205,8 @@
 
       .floating-label {
         color: var(--muted);
-        text-transform: uppercase;
         letter-spacing: 0.12em;
+        text-transform: uppercase;
         font-size: 0.72rem;
       }
 
@@ -206,6 +214,7 @@
         margin-top: 8px;
         font-size: 2rem;
         font-weight: 800;
+        color: var(--gold);
       }
 
       .section {
@@ -219,13 +228,6 @@
         margin-bottom: 24px;
       }
 
-      .kicker {
-        color: var(--blue);
-        font-size: 0.75rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-
       h2 {
         margin: 8px 0 0;
         font-size: clamp(2rem, 3vw, 3rem);
@@ -233,13 +235,13 @@
       }
 
       .snapshot {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 16px;
         background: rgba(255,255,255,0.02);
         border: 1px solid var(--line);
         border-radius: 24px;
         padding: 24px;
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 16px;
       }
 
       .snapshot-box {
@@ -322,7 +324,7 @@
         top: 0;
         width: 2px;
         height: 18px;
-        background: rgba(92,168,255,0.7);
+        background: rgba(217,28,38,0.8);
         transform: translateX(-50%);
       }
 
@@ -335,7 +337,7 @@
       }
 
       .timeline-year {
-        color: var(--blue);
+        color: var(--gold);
         text-transform: uppercase;
         letter-spacing: 0.12em;
         font-size: 0.72rem;
@@ -426,8 +428,8 @@
             <div class="kicker">India • Captain • Run Machine</div>
             <h1>Virat <span class="highlight">Kohli</span></h1>
             <p class="subtitle">
-              A modern cricket icon famous for his consistency, tempo, and ability to chase totals under pressure.
-              His elite batting across Tests, ODIs, T20Is, and the IPL has made him one of the game’s true greats.
+              A modern cricket icon praised for his consistency, match-winning temperament,
+              and remarkable performances across Tests, ODIs, T20Is, and the IPL.
             </p>
 
             <div class="cta-row">
@@ -446,7 +448,7 @@
               </div>
               <div class="mini-card">
                 <div class="mini-value">80+</div>
-                <div class="mini-label">International 100s</div>
+                <div class="mini-label">100s</div>
               </div>
             </div>
           </div>
@@ -458,8 +460,8 @@
               alt="Virat Kohli batting"
             />
             <div class="floating-card">
-              <div class="floating-label">Career Status</div>
-              <div class="floating-number">Elite</div>
+              <div class="floating-label">RCB Energy</div>
+              <div class="floating-number">Red</div>
             </div>
           </div>
         </div>
@@ -576,7 +578,7 @@
                   <div class="timeline-year">2008</div>
                   <div class="timeline-title">International Debut</div>
                   <div class="timeline-text">
-                    Virat Kohli made his international debut and started the journey that would define a generation.
+                    Virat Kohli began a remarkable international journey that would shape Indian cricket.
                   </div>
                 </div>
               </div>
@@ -586,7 +588,7 @@
                   <div class="timeline-year">2010</div>
                   <div class="timeline-title">Breakthrough</div>
                   <div class="timeline-text">
-                    His style and consistency elevated him as a core player in the Indian batting order.
+                    His aggressive batting and consistency made him a core figure in the team.
                   </div>
                 </div>
               </div>
@@ -596,7 +598,7 @@
                   <div class="timeline-year">2013</div>
                   <div class="timeline-title">World-Class Batting</div>
                   <div class="timeline-text">
-                    He emerged as one of the most reliable run-scorers in world cricket across formats.
+                    He emerged as one of the most dependable run-scorers in world cricket.
                   </div>
                 </div>
               </div>
@@ -606,7 +608,7 @@
                   <div class="timeline-year">2016</div>
                   <div class="timeline-title">Captaincy Era</div>
                   <div class="timeline-text">
-                    Under his leadership, India gained more aggression, structure, and confidence in big tournaments.
+                    His leadership gave India more confidence, aggression, and team identity.
                   </div>
                 </div>
               </div>
@@ -616,7 +618,7 @@
                   <div class="timeline-year">2018</div>
                   <div class="timeline-title">BGT 2018</div>
                   <div class="timeline-text">
-                    A defining overseas performance that showcased his temperament, patience, and elite class.
+                    A defining performance that showcased his composure and technical quality on foreign soil.
                   </div>
                 </div>
               </div>
@@ -626,7 +628,7 @@
                   <div class="timeline-year">2022</div>
                   <div class="timeline-title">Modern Great</div>
                   <div class="timeline-text">
-                    He continued producing iconic knocks and remained one of the leading run scorers globally.
+                    He continued to deliver big match-winning innings and command global attention.
                   </div>
                 </div>
               </div>
@@ -636,7 +638,7 @@
                   <div class="timeline-year">2025</div>
                   <div class="timeline-title">Legend Status</div>
                   <div class="timeline-text">
-                    Still a major figure in international cricket, admired for fitness, consistency, and chasing ability.
+                    Still one of cricket’s most admired and celebrated batsmen, with immense legacy and influence.
                   </div>
                 </div>
               </div>
@@ -660,25 +662,25 @@
               <ul>
                 <li>Most ODI centuries by an Indian batter</li>
                 <li>Fastest to 8,000 / 10,000 / 12,000 ODI runs</li>
-                <li>Dominant performer in major bilateral series</li>
+                <li>Dominant in high-pressure chases</li>
               </ul>
             </div>
 
             <div class="record-card">
               <h3>Test Cricket</h3>
               <ul>
-                <li>Elite overseas batting record</li>
-                <li>Several match-winning hundreds in Australia</li>
-                <li>One of India’s great modern Test batters</li>
+                <li>Exceptional overseas batting record</li>
+                <li>Several match-winning tons in Australia</li>
+                <li>One of India’s elite modern Test batters</li>
               </ul>
             </div>
 
             <div class="record-card">
               <h3>IPL & Leadership</h3>
               <ul>
-                <li>Key run scorer in franchise cricket</li>
-                <li>One of the biggest figures in world cricket</li>
-                <li>Widely respected for fitness and discipline</li>
+                <li>Massive impact in franchise cricket</li>
+                <li>Key role in team leadership and batting pressure</li>
+                <li>Universal recognition as a cricket icon</li>
               </ul>
             </div>
           </div>
