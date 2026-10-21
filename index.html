@@ -3,38 +3,73 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <title>Virat Kohli | Career, Stats & Achievements</title>
-    <meta
-      name="description"
-      content="Explore Virat Kohli's career, stats, records, milestones, and achievements in international cricket."
-    />
-    <meta name="author" content="Your Name or Organization" />
-    <meta name="theme-color" content="#0f172a" />
-    <meta name="robots" content="index,follow" />
-
-    <meta property="og:title" content="Virat Kohli | Career, Stats & Achievements" />
-    <meta
-      property="og:description"
-      content="Explore Virat Kohli's career, stats, records, milestones, and achievements in international cricket."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://your-domain.com/" />
-    <meta property="og:image" content="/og-image.jpg" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="canonical" href="https://your-domain.com/" />
-
-    <script type="module" src="/src/main.ts" defer></script>
+    <title>Virat Kohli Gallery</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #111827;
+        color: white;
+        margin: 0;
+        padding: 30px;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+      }
+      .card {
+        background: #1f2937;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      }
+      .card img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        display: block;
+      }
+      .card h3 {
+        margin: 0;
+        padding: 14px 16px 8px;
+      }
+      .card p {
+        margin: 0;
+        padding: 0 16px 16px;
+        color: #d1d5db;
+      }
+    </style>
   </head>
   <body>
-    <noscript>
-      You need JavaScript enabled to view this application.
-    </noscript>
+    <h1>Virat Kohli Moments</h1>
 
-    <div id="app"></div>
+    <div class="gallery">
+      <div class="card">
+        <img
+          src="https://your-image-url-here.com/bgt-2018-virat-kohli.jpg"
+          alt="Virat Kohli during BGT 2018"
+        />
+        <h3>BGT 2018</h3>
+        <p>Virat Kohli in the Border-Gavaskar Trophy 2018 series.</p>
+      </div>
+
+      <div class="card">
+        <img
+          src="https://your-image-url-here.com/virat-kohli-ipl-win.jpg"
+          alt="Virat Kohli celebrating an IPL win"
+        />
+        <h3>IPL Winning Moment</h3>
+        <p>Virat Kohli celebrating a major IPL-winning moment.</p>
+      </div>
+
+      <div class="card">
+        <img
+          src="https://your-image-url-here.com/india-batting-2025.jpg"
+          alt="Virat Kohli batting for India in 2025"
+        />
+        <h3>India Batting 2025</h3>
+        <p>Virat Kohli batting for India in a 2025 campaign.</p>
+      </div>
+    </div>
   </body>
 </html>
