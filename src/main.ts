@@ -1,10 +1,8 @@
 import './styles.css'
 import metadata from '../metadata.json'
 
-// Use local assets if present (metadata may reference /assets/imageX.jpg)
 const gallery: string[] = Array.isArray((metadata as any).gallery) ? (metadata as any).gallery : []
 
-// fallback remote images (used when local files 404)
 const FALLBACKS = [
   'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80',
   'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80',
@@ -12,10 +10,9 @@ const FALLBACKS = [
   'https://images.unsplash.com/photo-1505842465776-3d1a1d1a1a1a?auto=format&fit=crop&w=800&q=80'
 ]
 
-// Enhanced Canvas background for a lively wallpaper: moving color blobs + particle network + parallax
-function createCanvasBG(){
+function createCanvasBG() {
   const existing = document.getElementById('bgCanvas') as HTMLCanvasElement | null
-  if(existing) return
+  if (existing) return
 
   const canvas = document.createElement('canvas')
   canvas.id = 'bgCanvas'
@@ -31,130 +28,150 @@ function createCanvasBG(){
   document.body.appendChild(canvas)
 
   const ctx = canvas.getContext('2d')!
-  let w = 0, h = 0, DPR = Math.max(1, window.devicePixelRatio || 1)
+  let w = 0
+  let h = 0
+  const DPR = Math.max(1, window.devicePixelRatio || 1)
 
-  // blobs for colorful moving gradients
-  const blobs: {x:number;y:number;vx:number;vy:number;r:number;color:string;phase:number}[] = []
-  // particles for network
-  const particles: {x:number;y:number;vx:number;vy:number;r:number}[] = []
+  const blobs: Array<{ x: number; y: number; vx: number; vy: number; r: number; color: string; phase: number }> = []
+  const particles: Array<{ x: number; y: number; vx: number; vy: number; r: number }> = []
 
-  let mouseX = 0, mouseY = 0
-  const parallaxFactor = 30 // how much the mouse moves the background blobs
+  let mouseX = 0
+  let mouseY = 0
+  const parallaxFactor = 30
 
-  function resize(){
+  function resize() {
     w = Math.max(320, window.innerWidth)
     h = Math.max(320, window.innerHeight)
     canvas.width = Math.floor(w * DPR)
     canvas.height = Math.floor(h * DPR)
-    canvas.style.width = w + 'px'
-    canvas.style.height = h + 'px'
-    ctx.setTransform(DPR,0,0,DPR,0,0)
+    canvas.style.width = `${w}px`
+    canvas.style.height = `${h}px`
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
   }
 
-  function init(){
+  function init() {
     blobs.length = 0
     particles.length = 0
 
-    const bcount = Math.max(3, Math.round((w*h)/600000))
-    const palette = ['rgba(255,61,77,0.42)','rgba(255,214,102,0.32)','rgba(160,32,40,0.26)','rgba(255,255,255,0.10)']
-    for(let i=0;i<bcount;i++){
+    const bcount = Math.max(3, Math.round((w * h) / 600000))
+    const palette = ['rgba(217,28,38,0.38)', 'rgba(242,199,110,0.28)', 'rgba(255,255,255,0.12)', 'rgba(255,61,77,0.24)']
+    for (let i = 0; i < bcount; i++) {
       blobs.push({
-        x: Math.random()*w,
-        y: Math.random()*h,
-        vx: (Math.random()-0.5)*0.2,
-        vy: (Math.random()-0.5)*0.2,
-        r: Math.max(w,h)* (0.18 + Math.random()*0.18),
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        r: Math.max(w, h) * (0.18 + Math.random() * 0.18),
         color: palette[i % palette.length],
-        phase: Math.random()*Math.PI*2
+        phase: Math.random() * Math.PI * 2
       })
     }
 
-    const pcount = Math.round((w*h) / 80000)
-    for(let i=0;i<pcount;i++){
-      particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*1.6+0.4})
+    const pcount = Math.round((w * h) / 80000)
+    for (let i = 0; i < pcount; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 1.6 + 0.4
+      })
     }
   }
 
-  window.addEventListener('mousemove', (e)=>{ mouseX = e.clientX; mouseY = e.clientY })
-  window.addEventListener('resize', ()=>{ resize(); init() })
-  resize(); init()
+  window.addEventListener('mousemove', (event) => {
+    mouseX = event.clientX
+    mouseY = event.clientY
+  })
+
+  window.addEventListener('resize', () => {
+    resize()
+    init()
+  })
+
+  resize()
+  init()
 
   let t = 0
-  function draw(){
+
+  function draw() {
     t += 0.01
-    ctx.clearRect(0,0,w,h)
+    ctx.clearRect(0, 0, w, h)
     ctx.globalCompositeOperation = 'screen'
-    for(const b of blobs){
-      b.x += b.vx + Math.sin(t + b.phase)*0.05
-      b.y += b.vy + Math.cos(t + b.phase)*0.05
-      if(b.x < -b.r) b.x = w + b.r
-      if(b.x > w + b.r) b.x = -b.r
-      if(b.y < -b.r) b.y = h + b.r
-      if(b.y > h + b.r) b.y = -b.r
 
-      const px = (mouseX - w/2)/w * parallaxFactor
-      const py = (mouseY - h/2)/h * parallaxFactor
+    for (const blob of blobs) {
+      blob.x += blob.vx + Math.sin(t + blob.phase) * 0.05
+      blob.y += blob.vy + Math.cos(t + blob.phase) * 0.05
 
-      const grd = ctx.createRadialGradient(b.x+px, b.y+py, b.r*0.05, b.x+px, b.y+py, b.r)
-      try{
-        grd.addColorStop(0, b.color.replace(/,[^,]+\)/, ',1)'))
-        grd.addColorStop(0.25, b.color)
-        grd.addColorStop(1, b.color.replace(/,[^,]+\)/, ',0)'))
-      }catch(e){
-        grd.addColorStop(0, b.color)
-        grd.addColorStop(1, b.color)
+      if (blob.x < -blob.r) blob.x = w + blob.r
+      if (blob.x > w + blob.r) blob.x = -blob.r
+      if (blob.y < -blob.r) blob.y = h + blob.r
+      if (blob.y > h + blob.r) blob.y = -blob.r
+
+      const px = ((mouseX - w / 2) / w) * parallaxFactor
+      const py = ((mouseY - h / 2) / h) * parallaxFactor
+      const gradient = ctx.createRadialGradient(blob.x + px, blob.y + py, blob.r * 0.05, blob.x + px, blob.y + py, blob.r)
+
+      try {
+        gradient.addColorStop(0, blob.color.replace(/,[^,]+\)/, ',1)'))
+        gradient.addColorStop(0.25, blob.color)
+        gradient.addColorStop(1, blob.color.replace(/,[^,]+\)/, ',0)'))
+      } catch {
+        gradient.addColorStop(0, blob.color)
+        gradient.addColorStop(1, blob.color)
       }
 
-      ctx.fillStyle = grd
+      ctx.fillStyle = gradient
       ctx.beginPath()
-      ctx.arc(b.x+px, b.y+py, b.r, 0, Math.PI*2)
+      ctx.arc(blob.x + px, blob.y + py, blob.r, 0, Math.PI * 2)
       ctx.fill()
     }
 
     ctx.globalCompositeOperation = 'lighter'
-    for(const p of particles){
-      p.x += p.vx
-      p.y += p.vy
-      if(p.x<0) p.x = w
-      if(p.x> w) p.x = 0
-      if(p.y<0) p.y = h
-      if(p.y> h) p.y = 0
+    for (const particle of particles) {
+      particle.x += particle.vx
+      particle.y += particle.vy
+      if (particle.x < 0) particle.x = w
+      if (particle.x > w) particle.x = 0
+      if (particle.y < 0) particle.y = h
+      if (particle.y > h) particle.y = 0
     }
 
     ctx.lineWidth = 0.6
-    for(let i=0;i<particles.length;i++){
+    for (let i = 0; i < particles.length; i++) {
       const a = particles[i]
-      for(let j=i+1;j<particles.length;j++){
+      for (let j = i + 1; j < particles.length; j++) {
         const b = particles[j]
-        const dx = a.x-b.x, dy = a.y-b.y
-        const d = Math.sqrt(dx*dx+dy*dy)
-        if(d<120){
+        const dx = a.x - b.x
+        const dy = a.y - b.y
+        const d = Math.sqrt(dx * dx + dy * dy)
+
+        if (d < 120) {
           ctx.beginPath()
-          const alpha = (1 - d/120) * 0.08
-          ctx.strokeStyle = `rgba(255,214,102,${alpha.toFixed(3)})`
-          ctx.moveTo(a.x,a.y)
-          ctx.lineTo(b.x,b.y)
+          const alpha = (1 - d / 120) * 0.08
+          ctx.strokeStyle = `rgba(242,199,110,${alpha.toFixed(3)})`
+          ctx.moveTo(a.x, a.y)
+          ctx.lineTo(b.x, b.y)
           ctx.stroke()
         }
       }
     }
 
-    for(const p of particles){
+    for (const particle of particles) {
       ctx.beginPath()
       ctx.fillStyle = 'rgba(255,255,255,0.95)'
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+      ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2)
       ctx.fill()
     }
 
     ctx.globalCompositeOperation = 'source-over'
-    ctx.fillStyle = 'rgba(0,0,0,0)'
     requestAnimationFrame(draw)
   }
 
   draw()
 }
 
-function createSidebar(){
+function createSidebar() {
   const aside = document.createElement('aside')
   aside.className = 'sidebar'
   aside.innerHTML = `
@@ -166,12 +183,12 @@ function createSidebar(){
       <a href="#stats">Stats</a>
       <a href="#gallery">Gallery</a>
     </nav>
-    <button id="themeToggle" class="theme-btn">🌙</button>
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">🌙</button>
   `
   return aside
 }
 
-function createHero(){
+function createHero() {
   const section = document.createElement('section')
   section.id = 'home'
   section.className = 'hero'
@@ -180,9 +197,14 @@ function createHero(){
 
   section.innerHTML = `
     <div class="hero-text">
+      <div class="status-row">
+        <span class="status-pill">Official Player Profile</span>
+        <span class="status-pill muted">RCB • India</span>
+      </div>
       <p class="eyebrow">THE CHASE MASTER</p>
       <h1 class="glitch" data-text="${(metadata as any).hero.headline}"><span>${(metadata as any).hero.headline}</span></h1>
       <p class="hero-tagline">${(metadata as any).hero.tagline}</p>
+
       <div class="cta-row">
         <a href="#stats" class="primary-btn">View Stats</a>
         <a href="#career" class="secondary-btn">Career Timeline</a>
@@ -214,7 +236,7 @@ function createHero(){
   return section
 }
 
-function createShowcaseBanner(){
+function createShowcaseBanner() {
   const sec = document.createElement('section')
   sec.className = 'showcase-banner'
   sec.innerHTML = `
@@ -222,15 +244,11 @@ function createShowcaseBanner(){
       <div class="showcase-copy">
         <p class="mini-kicker">Legacy in red & blue</p>
         <h3>RCB fire meets Indian pride</h3>
-        <p>Half red RCB intensity. Half Indian jersey passion. One bat-wielding legend built for the big stage.</p>
+        <p>Half red RCB intensity. Half Indian jersey passion. One bat-wielding legend built for the big stage, celebrated for fearless chasing and elite consistency.</p>
       </div>
       <div class="split-jersey" aria-label="Virat Kohli jersey split design">
-        <div class="half half-red">
-          <span>RCB</span>
-        </div>
-        <div class="half half-blue">
-          <span>IND</span>
-        </div>
+        <div class="half half-red"><span>RCB</span></div>
+        <div class="half half-blue"><span>IND</span></div>
         <div class="crest">VK</div>
       </div>
     </div>
@@ -238,61 +256,61 @@ function createShowcaseBanner(){
   return sec
 }
 
-function createCareer(){
+function createCareer() {
   const events = [
     {
       year: '2006',
       label: 'Junior Breakthrough',
       title: 'U19 India and early promise',
-      description: 'Virat Kohli started to stand out as a highly talented young batter, showing the temperament and technique that would later define his international career.'
+      description: 'Virat Kohli emerged as a standout youth prospect, showing rare temperament, technical control, and a fearless hunger to score at all times.'
     },
     {
       year: '2008',
       label: 'International Debut',
       title: 'India call-up',
-      description: 'He made his international debut and began the climb toward becoming a dependable performer in India’s batting line-up across formats.'
+      description: 'He made his international debut and began a steady climb toward becoming one of India’s most dependable batsmen across all formats.'
     },
     {
       year: '2011',
       label: 'World Cup Impact',
       title: 'ICC Cricket World Cup',
-      description: 'Kohli’s rise continued through the 2011 World Cup, where he gave India critical batting depth and confidence in pressure moments.'
+      description: 'Kohli’s sharp strokeplay and calm under pressure helped India’s campaign, becoming a symbol of confidence in the batting order.'
     },
     {
       year: '2013',
       label: 'Global Star',
       title: 'The modern batting era',
-      description: 'He established himself as one of the world’s premier run-scorers and became the face of India’s aggressive middle-order batting.'
+      description: 'He turned into a world-class run machine, setting the standard for chasing, consistency, and high-value ODI innings.'
     },
     {
       year: '2016',
       label: 'Captaincy',
       title: 'India Test captaincy era',
-      description: 'As captain, Kohli transformed India into a fearless, high-intensity team that played with greater aggression and intent across conditions.'
+      description: 'Kohli transformed India into a more fearless and intense side, leading with personality, aggression, and a relentless drive to win.'
     },
     {
       year: '2018',
       label: 'BGT Masterclass',
-      title: 'Border-Gavaskar Trophy heroics',
-      description: 'His performances in Australia under pressure cemented his reputation as a world-class overseas batter, especially in difficult conditions.'
+      title: 'Australia heroics',
+      description: 'His performances in difficult overseas conditions cemented his reputation as an elite red-ball batter and a pressure-proof match-winner.'
     },
     {
       year: '2021',
-      label: 'T20 World Cup',
-      title: 'Leadership and batting class',
-      description: 'Kohli remained one of the most feared T20 batters globally, continuing to lead from the front with his power, shot selection, and chase control.'
+      label: 'T20 Leadership',
+      title: 'Chase specialist era',
+      description: 'He remained one of the most feared T20 batters in the world, combining power, technique, and game awareness to control chases.'
     },
     {
       year: '2022',
       label: 'Record Breaker',
       title: 'Run-scoring dominance',
-      description: 'He continued dominating ODI and Test cricket with remarkable consistency, keeping his standards at an elite level.'
+      description: 'Kohli continued to dominate the international scene with a blend of tempo, elegance, and unmatched consistency in high-pressure moments.'
     },
     {
       year: '2025',
       label: 'Legend Status',
       title: 'Modern cricket great',
-      description: 'Even in the modern era, Kohli is still regarded as one of cricket’s strongest competitors, admired for fitness, temperament, and chase-winning ability.'
+      description: 'His legacy is firmly established as one of the greatest modern batsmen, admired for fitness, hunger, and match-winning brilliance.'
     }
   ]
 
@@ -321,41 +339,72 @@ function createCareer(){
   return sec
 }
 
-function createAchievements(){
+function createAchievements() {
   const sec = document.createElement('section')
   sec.id = 'achievements'
   sec.className = 'section'
   sec.innerHTML = `
-    <h2>Achievements</h2>
+    <div class="section-heading">
+      <p class="section-tag">Recognition</p>
+      <h2>Achievements</h2>
+    </div>
     <div class="cards">
-      <div class="card"><h3>ICC Awards</h3><p>Multiple ICC Player of the Year and ODI awards.</p></div>
-      <div class="card"><h3>Centuries</h3><p>One of the most prolific century scorers in world cricket.</p></div>
-      <div class="card"><h3>Records</h3><p>Fastest to several major milestones in international cricket.</p></div>
-      <div class="card"><h3>Captaincy</h3><p>Led India with aggressive, fearless intent and passion.</p></div>
+      <div class="card"><h3>ICC Awards</h3><p>Multiple ICC Player of the Year and ODI of the Year accolades across his career.</p></div>
+      <div class="card"><h3>Centuries</h3><p>One of the most prolific century scorers in world cricket with elite consistency across formats.</p></div>
+      <div class="card"><h3>Records</h3><p>Fastest to several major ODI and international milestones, breaking records with a bat in hand.</p></div>
+      <div class="card"><h3>Captaincy</h3><p>Led India with relentless ambition, fearless intent, and a strong winning mentality.</p></div>
     </div>
   `
   return sec
 }
 
-function createStats(){
+function createStats() {
   const s = document.createElement('section')
   s.id = 'stats'
   s.className = 'section'
 
   s.innerHTML = `
-    <h2>Career Stats</h2>
+    <div class="section-heading">
+      <p class="section-tag">Performance Snapshot</p>
+      <h2>Career Stats</h2>
+    </div>
+
+    <div class="filter-bar" aria-label="Career filters">
+      <button class="filter-btn active" data-filter="all" type="button">All</button>
+      <button class="filter-btn" data-filter="Tests" type="button">Tests</button>
+      <button class="filter-btn" data-filter="ODIs" type="button">ODIs</button>
+      <button class="filter-btn" data-filter="T20Is" type="button">T20Is</button>
+      <button class="filter-btn" data-filter="IPL" type="button">IPL</button>
+    </div>
+
     <div class="stats-grid">
-      <div class="stat-box">
+      <div class="stat-box" data-format="all">
         <span class="num" id="runsCount">0</span>
         <label>International Runs</label>
       </div>
-      <div class="stat-box">
+      <div class="stat-box" data-format="all">
         <span class="num" id="centuriesCount">0</span>
         <label>International 100s</label>
       </div>
-      <div class="stat-box">
+      <div class="stat-box" data-format="all">
         <span class="num" id="odisCount">0</span>
         <label>ODIs Played</label>
+      </div>
+      <div class="stat-box" data-format="Tests">
+        <span class="num" id="testsMatches">0</span>
+        <label>Test Matches</label>
+      </div>
+      <div class="stat-box" data-format="ODIs">
+        <span class="num" id="odisMatches">0</span>
+        <label>ODI Matches</label>
+      </div>
+      <div class="stat-box" data-format="T20Is">
+        <span class="num" id="t20Matches">0</span>
+        <label>T20I Matches</label>
+      </div>
+      <div class="stat-box" data-format="IPL">
+        <span class="num" id="iplMatches">0</span>
+        <label>IPL Matches</label>
       </div>
     </div>
 
@@ -365,9 +414,10 @@ function createStats(){
           <tr><th>Format</th><th>Matches</th><th>Runs</th><th>Avg</th><th>100s</th></tr>
         </thead>
         <tbody>
-          <tr><td>Tests</td><td id="testsMatches"></td><td id="testsRuns"></td><td id="testsAvg"></td><td id="tests100s"></td></tr>
-          <tr><td>ODIs</td><td id="odisMatches"></td><td id="odisRuns"></td><td id="odisAvg"></td><td id="odis100s"></td></tr>
-          <tr><td>T20Is</td><td id="t20Matches"></td><td id="t20Runs"></td><td id="t20Avg"></td><td id="t20100s"></td></tr>
+          <tr data-format-row="Tests"><td>Tests</td><td id="testsMatchesRow"></td><td id="testsRuns"></td><td id="testsAvg"></td><td id="tests100s"></td></tr>
+          <tr data-format-row="ODIs"><td>ODIs</td><td id="odisMatchesRow"></td><td id="odisRuns"></td><td id="odisAvg"></td><td id="odis100s"></td></tr>
+          <tr data-format-row="T20Is"><td>T20Is</td><td id="t20MatchesRow"></td><td id="t20Runs"></td><td id="t20Avg"></td><td id="t20100s"></td></tr>
+          <tr data-format-row="IPL"><td>IPL</td><td id="iplMatchesRow"></td><td id="iplRuns"></td><td id="iplAvg"></td><td id="ipl100s"></td></tr>
         </tbody>
       </table>
     </div>
@@ -375,39 +425,56 @@ function createStats(){
 
   const fillStats = () => {
     const stats: any = (metadata as any).stats || {}
+
     const animate = (id: string, to: number) => {
       const el = document.getElementById(id)
       if (!el) return
       let start = 0
       const duration = 900
       const step = Math.ceil(to / (duration / 16))
-      const iv = setInterval(()=>{
+      const iv = setInterval(() => {
         start += step
-        if (start >= to){ el.textContent = String(to); clearInterval(iv) }
-        else el.textContent = String(start)
-      },16)
+        if (start >= to) {
+          el.textContent = String(to)
+          clearInterval(iv)
+        } else {
+          el.textContent = String(start)
+        }
+      }, 16)
     }
 
     animate('runsCount', stats.internationalRuns || 0)
     animate('centuriesCount', stats.internationalCenturies || 0)
     animate('odisCount', stats.odisPlayed || 0)
 
-    const fill = (id: string, value: any) => { const el = document.getElementById(id); if (el) el.textContent = String(value ?? '-') }
+    const fill = (id: string, value: any) => {
+      const el = document.getElementById(id)
+      if (el) el.textContent = String(value ?? '-')
+    }
 
     fill('testsMatches', stats.tests?.matches)
+    fill('testsMatchesRow', stats.tests?.matches)
     fill('testsRuns', stats.tests?.runs)
     fill('testsAvg', stats.tests?.avg)
     fill('tests100s', stats.tests?.hundreds)
 
     fill('odisMatches', stats.odis?.matches)
+    fill('odisMatchesRow', stats.odis?.matches)
     fill('odisRuns', stats.odis?.runs)
     fill('odisAvg', stats.odis?.avg)
     fill('odis100s', stats.odis?.hundreds)
 
     fill('t20Matches', stats.t20is?.matches)
+    fill('t20MatchesRow', stats.t20is?.matches)
     fill('t20Runs', stats.t20is?.runs)
     fill('t20Avg', stats.t20is?.avg)
     fill('t20100s', stats.t20is?.hundreds)
+
+    fill('iplMatches', 252)
+    fill('iplMatchesRow', 252)
+    fill('iplRuns', 8164)
+    fill('iplAvg', 38.67)
+    fill('ipl100s', 8)
   }
 
   setTimeout(fillStats, 50)
@@ -415,15 +482,16 @@ function createStats(){
   return s
 }
 
-async function createGallery(){
+async function createGallery() {
   const sec = document.createElement('section')
   sec.id = 'gallery'
   sec.className = 'section'
-  sec.innerHTML = `<h2>Gallery</h2>`
+  sec.innerHTML = `<div class="section-heading"><p class="section-tag">Visual Story</p><h2>Gallery</h2></div>`
+
   const grid = document.createElement('div')
   grid.className = 'gallery-grid'
 
-  const checkImage = (url: string) => new Promise<string|null>((resolve)=>{
+  const checkImage = (url: string) => new Promise<string | null>((resolve) => {
     const img = new Image()
     img.onload = () => resolve(url)
     img.onerror = () => resolve(null)
@@ -432,42 +500,52 @@ async function createGallery(){
 
   const imgsToUse: string[] = []
 
-  for(let i=0;i<Math.max(gallery.length, FALLBACKS.length); i++){
+  for (let i = 0; i < Math.max(gallery.length, FALLBACKS.length); i++) {
     const candidate = gallery[i] || FALLBACKS[i % FALLBACKS.length]
-    try{
+    try {
       const ok = await checkImage(candidate)
-      if(ok) imgsToUse.push(ok)
-      else {
-        console.warn(`Image not reachable: ${candidate} — using fallback`)
+      if (ok) {
+        imgsToUse.push(ok)
+      } else {
         imgsToUse.push(FALLBACKS[i % FALLBACKS.length])
       }
-    }catch(e){
+    } catch {
       imgsToUse.push(FALLBACKS[i % FALLBACKS.length])
     }
   }
 
-  imgsToUse.forEach((src, idx)=>{
+  imgsToUse.forEach((src, idx) => {
+    const card = document.createElement('figure')
+    card.className = 'gallery-item'
+
     const img = document.createElement('img')
     img.src = src
-    img.alt = `player-${idx+1}`
-    grid.appendChild(img)
+    img.alt = `Virat Kohli gallery ${idx + 1}`
+
+    const fig = document.createElement('figcaption')
+    fig.textContent = idx % 2 === 0 ? 'Elite performance' : 'Legacy moments'
+
+    card.appendChild(img)
+    card.appendChild(fig)
+    grid.appendChild(card)
   })
 
   sec.appendChild(grid)
   return sec
 }
 
-function createFooter(){
-  const f = document.createElement('footer')
-  f.className = 'site-footer'
-  f.innerHTML = `<div>crafted with ⚡ by <span class="credit">Dodo</span></div>`
-  return f
+function createFooter() {
+  const footer = document.createElement('footer')
+  footer.className = 'site-footer'
+  footer.innerHTML = `<div>crafted with ⚡ by <span class="credit">Dodo</span></div>`
+  return footer
 }
 
-function bindTiltEffect(){
+function bindTiltEffect() {
   const cards = document.querySelectorAll('.tilt-card')
   cards.forEach((card) => {
     const el = card as HTMLElement
+
     el.addEventListener('pointermove', (event: PointerEvent) => {
       const rect = el.getBoundingClientRect()
       const px = (event.clientX - rect.left) / rect.width
@@ -487,10 +565,37 @@ function bindTiltEffect(){
   })
 }
 
-async function mount(){
+function bindFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn')
+  const statBoxes = document.querySelectorAll('.stat-box')
+  const rows = document.querySelectorAll('[data-format-row]')
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = (button as HTMLElement).dataset.filter || 'all'
+
+      filterButtons.forEach((item) => item.classList.toggle('active', item === button))
+
+      statBoxes.forEach((box) => {
+        const format = (box as HTMLElement).dataset.format || 'all'
+        const shouldShow = filter === 'all' || format === filter
+        ;(box as HTMLElement).style.display = shouldShow ? '' : 'none'
+      })
+
+      rows.forEach((row) => {
+        const format = (row as HTMLElement).dataset.formatRow || 'all'
+        ;(row as HTMLElement).style.display = filter === 'all' || format === filter ? '' : 'none'
+      })
+    })
+  })
+}
+
+async function mount() {
   createCanvasBG()
+
   const app = document.getElementById('app')!
   app.innerHTML = ''
+
   const wrapper = document.createElement('div')
   wrapper.className = 'app'
   wrapper.style.position = 'relative'
@@ -509,13 +614,17 @@ async function mount(){
 
   wrapper.appendChild(main)
   wrapper.appendChild(createFooter())
-
   app.appendChild(wrapper)
 
   bindTiltEffect()
+  bindFilters()
 
-  const tbtn = document.getElementById('themeToggle')
-  if(tbtn){ tbtn.addEventListener('click', ()=>{ document.documentElement.classList.toggle('light') }) }
+  const themeToggle = document.getElementById('themeToggle')
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light')
+    })
+  }
 }
 
 mount()
