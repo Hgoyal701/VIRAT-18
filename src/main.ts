@@ -56,7 +56,7 @@ function createCanvasBG(){
     particles.length = 0
 
     const bcount = Math.max(3, Math.round((w*h)/600000))
-    const palette = ['rgba(155,92,255,0.45)','rgba(255,45,85,0.38)','rgba(0,240,255,0.28)','rgba(255,140,50,0.18)']
+    const palette = ['rgba(255,61,77,0.42)','rgba(255,214,102,0.32)','rgba(160,32,40,0.26)','rgba(255,255,255,0.10)']
     for(let i=0;i<bcount;i++){
       blobs.push({
         x: Math.random()*w,
@@ -82,27 +82,20 @@ function createCanvasBG(){
   let t = 0
   function draw(){
     t += 0.01
-    // clear
     ctx.clearRect(0,0,w,h)
-
-    // moving blob layer (additive)
     ctx.globalCompositeOperation = 'screen'
     for(const b of blobs){
-      // gentle movement + phase bob
       b.x += b.vx + Math.sin(t + b.phase)*0.05
       b.y += b.vy + Math.cos(t + b.phase)*0.05
-      // wrap
       if(b.x < -b.r) b.x = w + b.r
       if(b.x > w + b.r) b.x = -b.r
       if(b.y < -b.r) b.y = h + b.r
       if(b.y > h + b.r) b.y = -b.r
 
-      // parallax offset based on mouse
       const px = (mouseX - w/2)/w * parallaxFactor
       const py = (mouseY - h/2)/h * parallaxFactor
 
       const grd = ctx.createRadialGradient(b.x+px, b.y+py, b.r*0.05, b.x+px, b.y+py, b.r)
-      // subtle stops for soft glow
       try{
         grd.addColorStop(0, b.color.replace(/,[^,]+\)/, ',1)'))
         grd.addColorStop(0.25, b.color)
@@ -118,7 +111,6 @@ function createCanvasBG(){
       ctx.fill()
     }
 
-    // particle network on top
     ctx.globalCompositeOperation = 'lighter'
     for(const p of particles){
       p.x += p.vx
@@ -129,7 +121,6 @@ function createCanvasBG(){
       if(p.y> h) p.y = 0
     }
 
-    // draw connections
     ctx.lineWidth = 0.6
     for(let i=0;i<particles.length;i++){
       const a = particles[i]
@@ -140,7 +131,7 @@ function createCanvasBG(){
         if(d<120){
           ctx.beginPath()
           const alpha = (1 - d/120) * 0.08
-          ctx.strokeStyle = `rgba(0,240,255,${alpha.toFixed(3)})`
+          ctx.strokeStyle = `rgba(255,214,102,${alpha.toFixed(3)})`
           ctx.moveTo(a.x,a.y)
           ctx.lineTo(b.x,b.y)
           ctx.stroke()
@@ -148,7 +139,6 @@ function createCanvasBG(){
       }
     }
 
-    // draw particles with slight glow
     for(const p of particles){
       ctx.beginPath()
       ctx.fillStyle = 'rgba(255,255,255,0.95)'
@@ -156,7 +146,6 @@ function createCanvasBG(){
       ctx.fill()
     }
 
-    // subtle vignette overlay
     ctx.globalCompositeOperation = 'source-over'
     ctx.fillStyle = 'rgba(0,0,0,0)'
     requestAnimationFrame(draw)
@@ -193,19 +182,60 @@ function createHero(){
     <div class="hero-text">
       <p class="eyebrow">THE CHASE MASTER</p>
       <h1 class="glitch" data-text="${(metadata as any).hero.headline}"><span>${(metadata as any).hero.headline}</span></h1>
-      <p style="color:var(--muted)">${(metadata as any).hero.tagline}</p>
-      <div class="cta-row" style="margin-top:14px">
+      <p class="hero-tagline">${(metadata as any).hero.tagline}</p>
+      <div class="cta-row">
         <a href="#stats" class="primary-btn">View Stats</a>
         <a href="#career" class="secondary-btn">Career Timeline</a>
       </div>
+
+      <div class="quick-metrics">
+        <div class="metric-box">
+          <span class="metric-number">35K+</span>
+          <span class="metric-label">Runs</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-number">785</span>
+          <span class="metric-label">Matches</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-number">80+</span>
+          <span class="metric-label">100s</span>
+        </div>
+      </div>
     </div>
+
     <div class="hero-visual">
-      <div class="player-card">
-        <img id="heroImg" src="${heroImg}" alt="player" />
+      <div class="player-card tilt-card" aria-label="Virat Kohli profile card">
+        <img id="heroImg" src="${heroImg}" alt="Virat Kohli" />
+        <div class="card-glow"></div>
       </div>
     </div>
   `
   return section
+}
+
+function createShowcaseBanner(){
+  const sec = document.createElement('section')
+  sec.className = 'showcase-banner'
+  sec.innerHTML = `
+    <div class="showcase-shell">
+      <div class="showcase-copy">
+        <p class="mini-kicker">Legacy in red & blue</p>
+        <h3>RCB fire meets Indian pride</h3>
+        <p>Half red RCB intensity. Half Indian jersey passion. One bat-wielding legend built for the big stage.</p>
+      </div>
+      <div class="split-jersey" aria-label="Virat Kohli jersey split design">
+        <div class="half half-red">
+          <span>RCB</span>
+        </div>
+        <div class="half half-blue">
+          <span>IND</span>
+        </div>
+        <div class="crest">VK</div>
+      </div>
+    </div>
+  `
+  return sec
 }
 
 // rest of components unchanged but enhanced by styles
@@ -378,6 +408,29 @@ function createFooter(){
   return f
 }
 
+function bindTiltEffect(){
+  const cards = document.querySelectorAll('.tilt-card')
+  cards.forEach((card) => {
+    const el = card as HTMLElement
+    el.addEventListener('pointermove', (event: PointerEvent) => {
+      const rect = el.getBoundingClientRect()
+      const px = (event.clientX - rect.left) / rect.width
+      const py = (event.clientY - rect.top) / rect.height
+      const rotateY = (px - 0.5) * 18
+      const rotateX = (0.5 - py) * 18
+      el.style.setProperty('--rotateX', `${rotateX.toFixed(2)}deg`)
+      el.style.setProperty('--rotateY', `${rotateY.toFixed(2)}deg`)
+      el.style.setProperty('--glowX', `${(px * 100).toFixed(1)}%`)
+      el.style.setProperty('--glowY', `${(py * 100).toFixed(1)}%`)
+    })
+
+    el.addEventListener('pointerleave', () => {
+      el.style.setProperty('--rotateX', '0deg')
+      el.style.setProperty('--rotateY', '0deg')
+    })
+  })
+}
+
 async function mount(){
   createCanvasBG()
   const app = document.getElementById('app')!
@@ -392,18 +445,19 @@ async function mount(){
   const main = document.createElement('main')
   main.className = 'content'
   main.appendChild(createHero())
+  main.appendChild(createShowcaseBanner())
   main.appendChild(createCareer())
   main.appendChild(createAchievements())
   main.appendChild(createStats())
   main.appendChild(await createGallery())
 
   wrapper.appendChild(main)
-  // add footer at the bottommost part
   wrapper.appendChild(createFooter())
 
   app.appendChild(wrapper)
 
-  // theme toggle (very small)
+  bindTiltEffect()
+
   const tbtn = document.getElementById('themeToggle')
   if(tbtn){ tbtn.addEventListener('click', ()=>{ document.documentElement.classList.toggle('light') }) }
 }
