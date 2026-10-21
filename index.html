@@ -6,65 +6,51 @@
     <title>Virat Kohli | Career, Stats & Achievements</title>
     <meta
       name="description"
-      content="Official-style profile of Virat Kohli featuring his career timeline, key records, and updated stats."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
+      content="Virat Kohli career timeline, awards, and complete statistical overview."
     />
     <style>
       :root {
-        --bg: #07111f;
-        --bg-soft: #0d1b2a;
-        --panel: rgba(13, 27, 42, 0.9);
-        --panel-2: #101f31;
-        --line: rgba(255,255,255,0.08);
-        --text: #edf6ff;
-        --muted: #a8b7c9;
-        --primary: #3ea6ff;
-        --primary-2: #8ad0ff;
-        --accent: #e4b53c;
-        --green: #6fe0a0;
-        --red: #ff6d6d;
-        --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+        --bg: #081522;
+        --bg-2: #102337;
+        --panel: rgba(255, 255, 255, 0.04);
+        --panel-strong: #0f2238;
+        --line: rgba(255, 255, 255, 0.08);
+        --text: #edf7ff;
+        --muted: #a8b8ca;
+        --blue: #5ca8ff;
+        --gold: #e7c76b;
+        --green: #78d49b;
+        --shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
       }
 
       * { box-sizing: border-box; }
 
-      html { scroll-behavior: smooth; }
-
       body {
         margin: 0;
-        font-family: "Inter", sans-serif;
+        font-family: Arial, sans-serif;
         background:
-          radial-gradient(circle at top left, rgba(62,166,255,0.18), transparent 24%),
-          radial-gradient(circle at bottom right, rgba(228,181,60,0.14), transparent 20%),
-          var(--bg);
+          radial-gradient(circle at top left, rgba(92,168,255,0.18), transparent 25%),
+          linear-gradient(180deg, var(--bg), #071119);
         color: var(--text);
       }
 
-      a { color: inherit; text-decoration: none; }
-
       .container {
-        width: min(1180px, calc(100% - 32px));
+        width: min(1160px, calc(100% - 32px));
         margin: 0 auto;
       }
 
       .topbar {
         position: sticky;
         top: 0;
-        z-index: 50;
-        background: rgba(7, 17, 31, 0.82);
         backdrop-filter: blur(10px);
+        background: rgba(8,21,34,0.8);
         border-bottom: 1px solid var(--line);
       }
 
       .nav {
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
         padding: 18px 0;
       }
 
@@ -72,7 +58,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        font-weight: 800;
+        font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
@@ -81,46 +67,22 @@
         width: 38px;
         height: 38px;
         border-radius: 50%;
+        background: linear-gradient(135deg, var(--blue), #bcdefb);
+        color: var(--bg);
         display: grid;
         place-items: center;
-        background: linear-gradient(135deg, var(--primary), #58b2ff);
-        color: #04131f;
-        font-weight: 900;
+        font-weight: 800;
       }
 
       .nav-links {
         display: flex;
-        align-items: center;
         gap: 22px;
         color: var(--muted);
-        font-size: 0.94rem;
       }
 
-      .nav-links a:hover { color: var(--text); }
-
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        border: 1px solid rgba(255,255,255,0.08);
-        padding: 12px 18px;
-        border-radius: 999px;
-        color: var(--text);
-        background: rgba(255,255,255,0.02);
-        font-weight: 600;
-        transition: 0.25s ease;
-      }
-
-      .cta.primary {
-        background: linear-gradient(135deg, var(--primary), #5eaefb);
-        color: #091825;
-        border: none;
-        box-shadow: 0 10px 24px rgba(62,166,255,0.35);
-      }
-
-      .cta:hover {
-        transform: translateY(-1px);
+      .nav-links a {
+        color: inherit;
+        text-decoration: none;
       }
 
       .hero {
@@ -134,119 +96,116 @@
         align-items: center;
       }
 
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border-radius: 999px;
-        background: rgba(62,166,255,0.1);
-        border: 1px solid rgba(62,166,255,0.2);
-        color: var(--primary-2);
-        font-size: 0.76rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-      }
-
       h1 {
         margin: 0;
-        font-size: clamp(2.5rem, 5vw, 5rem);
-        line-height: 0.95;
+        font-size: clamp(2.8rem, 6vw, 5.2rem);
+        line-height: 0.94;
         letter-spacing: -0.06em;
       }
 
-      .hero .title-accent {
-        color: var(--primary-2);
+      .highlight {
+        color: var(--blue);
       }
 
-      .subtext {
-        margin-top: 20px;
-        max-width: 620px;
-        font-size: 1.06rem;
-        line-height: 1.75;
+      .subtitle {
+        margin-top: 18px;
         color: var(--muted);
+        font-size: 1.06rem;
+        line-height: 1.7;
+        max-width: 640px;
       }
 
-      .hero-actions {
-        margin-top: 28px;
+      .cta-row {
+        margin-top: 24px;
         display: flex;
         gap: 12px;
         flex-wrap: wrap;
       }
 
-      .mini-grid {
+      .btn {
+        display: inline-block;
+        padding: 14px 22px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.25s ease;
+      }
+
+      .btn.primary {
+        background: linear-gradient(135deg, var(--blue), #84c7ff);
+        color: #091e2d;
+      }
+
+      .btn.secondary {
+        border: 1px solid var(--line);
+        color: var(--text);
+        background: rgba(255,255,255,0.02);
+      }
+
+      .mini-stats {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0,1fr));
-        gap: 12px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
         margin-top: 26px;
         max-width: 560px;
       }
 
       .mini-card {
-        background: rgba(255,255,255,0.02);
+        background: var(--panel);
         border: 1px solid var(--line);
-        padding: 16px 18px;
         border-radius: 18px;
+        padding: 18px 16px;
       }
 
       .mini-value {
+        font-size: 1.5rem;
         font-weight: 800;
-        font-size: 1.35rem;
-        margin-bottom: 4px;
       }
 
       .mini-label {
-        font-size: 0.75rem;
+        margin-top: 8px;
         color: var(--muted);
-        letter-spacing: 0.08em;
+        font-size: 0.72rem;
         text-transform: uppercase;
+        letter-spacing: 0.1em;
       }
 
-      .hero-visual {
+      .hero-image-wrap {
         position: relative;
       }
 
-      .portrait-card {
-        position: relative;
+      .hero-image {
+        width: 100%;
+        height: 560px;
+        object-fit: cover;
         border-radius: 26px;
-        overflow: hidden;
-        background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
         border: 1px solid var(--line);
         box-shadow: var(--shadow);
       }
 
-      .portrait-card img {
-        display: block;
-        width: 100%;
-        height: 560px;
-        object-fit: cover;
-        filter: saturate(1.04) contrast(1.04);
-      }
-
       .floating-card {
         position: absolute;
-        right: -16px;
+        right: -12px;
         bottom: 18px;
-        background: rgba(7, 17, 31, 0.88);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(8,21,34,0.86);
+        border: 1px solid var(--line);
         border-radius: 18px;
-        padding: 16px 18px;
-        min-width: 200px;
+        padding: 16px;
+        min-width: 180px;
         box-shadow: var(--shadow);
       }
 
       .floating-label {
         color: var(--muted);
-        font-size: 0.72rem;
-        letter-spacing: 0.11em;
         text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.72rem;
       }
 
-      .floating-value {
-        margin-top: 6px;
+      .floating-number {
+        margin-top: 8px;
+        font-size: 2rem;
         font-weight: 800;
-        font-size: 1.65rem;
       }
 
       .section {
@@ -255,101 +214,116 @@
 
       .section-header {
         display: flex;
-        align-items: end;
         justify-content: space-between;
-        gap: 16px;
+        align-items: end;
         margin-bottom: 24px;
       }
 
-      .section-kicker {
-        font-size: 0.76rem;
+      .kicker {
+        color: var(--blue);
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--primary-2);
       }
 
       h2 {
         margin: 8px 0 0;
         font-size: clamp(2rem, 3vw, 3rem);
-        letter-spacing: -0.06em;
+        letter-spacing: -0.05em;
+      }
+
+      .snapshot {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 24px;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .snapshot-box {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px 16px;
+      }
+
+      .snapshot-label {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.7rem;
+      }
+
+      .snapshot-value {
+        margin-top: 12px;
+        font-size: clamp(1.5rem, 2vw, 2.1rem);
+        font-weight: 800;
       }
 
       .stats-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0,1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 18px;
       }
 
       .stat-card {
-        background: rgba(255,255,255,0.02);
+        background: rgba(255,255,255,0.03);
         border: 1px solid var(--line);
         border-radius: 22px;
-        padding: 22px 18px;
+        padding: 20px 18px;
         box-shadow: var(--shadow);
       }
 
-      .stat-format {
-        color: var(--primary-2);
+      .format {
+        color: var(--gold);
         text-transform: uppercase;
         letter-spacing: 0.12em;
         font-size: 0.72rem;
         font-weight: 700;
       }
 
-      .stat-value {
+      .stats-value {
         margin-top: 12px;
-        font-size: clamp(2rem, 3vw, 2.5rem);
+        font-size: 2rem;
         font-weight: 800;
-        letter-spacing: -0.05em;
       }
 
-      .stat-meta {
+      .stats-meta {
         margin-top: 12px;
-        display: grid;
-        gap: 8px;
         color: var(--muted);
-        font-size: 0.9rem;
+        line-height: 1.8;
+        font-size: 0.92rem;
       }
 
       .timeline-shell {
-        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        padding: 22px 18px;
         border: 1px solid var(--line);
-        border-radius: 26px;
-        padding: 28px 18px;
+        border-radius: 24px;
+        background: rgba(255,255,255,0.02);
       }
 
       .timeline {
-        position: relative;
         display: grid;
         grid-template-columns: repeat(7, minmax(0,1fr));
-        gap: 18px;
-        margin-top: 10px;
-      }
-
-      .timeline::before {
-        content: "";
-        position: absolute;
-        left: 5%;
-        right: 5%;
-        top: 28px;
-        height: 2px;
-        background: linear-gradient(90deg, rgba(62,166,255,0.4), rgba(255,255,255,0.15), rgba(228,181,60,0.4));
+        gap: 16px;
       }
 
       .timeline-item {
         position: relative;
-        z-index: 1;
-        padding-top: 14px;
+        padding-top: 18px;
       }
 
-      .timeline-dot {
-        width: 18px;
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 2px;
         height: 18px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        border: 4px solid rgba(7,17,31,1);
-        box-shadow: 0 0 0 2px rgba(62,166,255,0.3);
-        margin: 0 auto 14px;
+        background: rgba(92,168,255,0.7);
+        transform: translateX(-50%);
       }
 
       .timeline-card {
@@ -357,28 +331,28 @@
         border: 1px solid var(--line);
         border-radius: 18px;
         padding: 16px 14px;
-        min-height: 150px;
+        min-height: 160px;
       }
 
       .timeline-year {
-        font-size: 0.76rem;
-        letter-spacing: 0.12em;
+        color: var(--blue);
         text-transform: uppercase;
-        color: var(--primary-2);
+        letter-spacing: 0.12em;
+        font-size: 0.72rem;
         font-weight: 700;
       }
 
       .timeline-title {
-        margin-top: 12px;
-        font-size: 1.05rem;
+        margin-top: 10px;
         font-weight: 700;
+        font-size: 1.05rem;
       }
 
       .timeline-text {
-        margin-top: 10px;
+        margin-top: 12px;
         color: var(--muted);
+        font-size: 0.9rem;
         line-height: 1.6;
-        font-size: 0.92rem;
       }
 
       .records {
@@ -388,15 +362,14 @@
       }
 
       .record-card {
+        padding: 20px;
+        border-radius: 20px;
         background: rgba(255,255,255,0.02);
         border: 1px solid var(--line);
-        border-radius: 22px;
-        padding: 22px 20px;
       }
 
       .record-card h3 {
-        margin: 0 0 14px;
-        font-size: 1.1rem;
+        margin: 0 0 12px;
       }
 
       .record-card ul {
@@ -408,23 +381,23 @@
 
       .footer {
         padding: 24px 0 60px;
-        color: var(--muted);
         text-align: center;
-        font-size: 0.9rem;
+        color: var(--muted);
       }
 
-      @media (max-width: 960px) {
+      @media (max-width: 900px) {
         .hero-grid { grid-template-columns: 1fr; }
         .stats-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-        .records { grid-template-columns: 1fr; }
+        .snapshot { grid-template-columns: repeat(2, minmax(0,1fr)); }
         .timeline { grid-template-columns: repeat(2, minmax(0,1fr)); }
-        .timeline::before { display: none; }
+        .records { grid-template-columns: 1fr; }
       }
 
-      @media (max-width: 600px) {
+      @media (max-width: 560px) {
         .nav-links { display: none; }
+        .mini-stats { grid-template-columns: 1fr; }
         .stats-grid { grid-template-columns: 1fr; }
-        .mini-grid { grid-template-columns: 1fr; }
+        .snapshot { grid-template-columns: 1fr; }
         .timeline { grid-template-columns: 1fr; }
       }
     </style>
@@ -437,14 +410,12 @@
           <span>Virat Kohli</span>
         </div>
 
-        <nav class="nav-links" aria-label="Main nav">
+        <nav class="nav-links">
           <a href="#career">Career</a>
           <a href="#stats">Stats</a>
           <a href="#records">Records</a>
           <a href="#timeline">Timeline</a>
         </nav>
-
-        <a href="#stats" class="cta primary">View Stats</a>
       </div>
     </header>
 
@@ -452,48 +423,43 @@
       <section class="hero">
         <div class="container hero-grid">
           <div>
-            <div class="eyebrow">India • Captain • Run Machine</div>
-            <h1>
-              Virat <span class="title-accent">Kohli</span>
-            </h1>
-            <p class="subtext">
-              One of the most dominant modern-day batsmen in world cricket,
-              known for his consistency, fitness, aggression, and match-winning
-              performances across all formats.
+            <div class="kicker">India • Captain • Run Machine</div>
+            <h1>Virat <span class="highlight">Kohli</span></h1>
+            <p class="subtitle">
+              A modern cricket icon famous for his consistency, tempo, and ability to chase totals under pressure.
+              His elite batting across Tests, ODIs, T20Is, and the IPL has made him one of the game’s true greats.
             </p>
 
-            <div class="hero-actions">
-              <a href="#stats" class="cta primary">Career Stats</a>
-              <a href="#timeline" class="cta">View Timeline</a>
+            <div class="cta-row">
+              <a href="#stats" class="btn primary">Career Stats</a>
+              <a href="#timeline" class="btn secondary">Timeline</a>
             </div>
 
-            <div class="mini-grid">
+            <div class="mini-stats">
               <div class="mini-card">
-                <div class="mini-value">50+</div>
-                <div class="mini-label">ODI Hundreds</div>
+                <div class="mini-value">35,048+</div>
+                <div class="mini-label">Total Runs</div>
               </div>
               <div class="mini-card">
-                <div class="mini-value">29</div>
-                <div class="mini-label">Test Hundreds</div>
+                <div class="mini-value">785</div>
+                <div class="mini-label">Matches</div>
               </div>
               <div class="mini-card">
-                <div class="mini-value">8</div>
-                <div class="mini-label">IPL Hundreds</div>
+                <div class="mini-value">80+</div>
+                <div class="mini-label">International 100s</div>
               </div>
             </div>
           </div>
 
-          <div class="hero-visual">
-            <div class="portrait-card">
-              <img
-                src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80"
-                alt="Virat Kohli batting"
-              />
-            </div>
-
+          <div class="hero-image-wrap">
+            <img
+              class="hero-image"
+              src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=900&q=80"
+              alt="Virat Kohli batting"
+            />
             <div class="floating-card">
-              <div class="floating-label">Legendary Status</div>
-              <div class="floating-value">Elite</div>
+              <div class="floating-label">Career Status</div>
+              <div class="floating-number">Elite</div>
             </div>
           </div>
         </div>
@@ -503,12 +469,94 @@
         <div class="container">
           <div class="section-header">
             <div>
-              <div class="section-kicker">Updated Profile</div>
-              <h2>Career Stats</h2>
+              <div class="kicker">Career Overview</div>
+              <h2>Complete Stats</h2>
             </div>
           </div>
 
-          <div class="stats-grid" id="statsGrid"></div>
+          <div class="snapshot">
+            <div class="snapshot-box">
+              <div class="snapshot-label">Matches</div>
+              <div class="snapshot-value">785</div>
+            </div>
+            <div class="snapshot-box">
+              <div class="snapshot-label">Runs</div>
+              <div class="snapshot-value">35,048+</div>
+            </div>
+            <div class="snapshot-box">
+              <div class="snapshot-label">Average</div>
+              <div class="snapshot-value">48+</div>
+            </div>
+            <div class="snapshot-box">
+              <div class="snapshot-label">100s</div>
+              <div class="snapshot-value">80+</div>
+            </div>
+            <div class="snapshot-box">
+              <div class="snapshot-label">50s</div>
+              <div class="snapshot-value">150+</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <div class="kicker">Format by Format</div>
+              <h2>Format-wise Stats</h2>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <div class="format">Tests</div>
+              <div class="stats-value">113</div>
+              <div class="stats-meta">
+                Matches: 113<br />
+                Runs: 8,848+<br />
+                Avg: 49.15<br />
+                100s: 29<br />
+                50s: 30
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="format">ODIs</div>
+              <div class="stats-value">295</div>
+              <div class="stats-meta">
+                Matches: 295<br />
+                Runs: 13,848+<br />
+                Avg: 58.18<br />
+                100s: 50<br />
+                50s: 72
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="format">T20Is</div>
+              <div class="stats-value">125</div>
+              <div class="stats-meta">
+                Matches: 125<br />
+                Runs: 4,188+<br />
+                Avg: 48.69<br />
+                100s: 1<br />
+                50s: 31
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="format">IPL</div>
+              <div class="stats-value">252</div>
+              <div class="stats-meta">
+                Matches: 252<br />
+                Runs: 8,164+<br />
+                Avg: 38.67<br />
+                100s: 8<br />
+                50s: 63
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -516,13 +564,83 @@
         <div class="container">
           <div class="section-header">
             <div>
-              <div class="section-kicker">Career Journey</div>
+              <div class="kicker">Career Journey</div>
               <h2>Timeline</h2>
             </div>
           </div>
 
           <div class="timeline-shell">
-            <div class="timeline" id="timelineGrid"></div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-card">
+                  <div class="timeline-year">2008</div>
+                  <div class="timeline-title">International Debut</div>
+                  <div class="timeline-text">
+                    Virat Kohli made his international debut and started the journey that would define a generation.
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-card">
+                  <div class="timeline-year">2010</div>
+                  <div class="timeline-title">Breakthrough</div>
+                  <div class="timeline-text">
+                    His style and consistency elevated him as a core player in the Indian batting order.
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-card">
+                  <div class="timeline-year">2013</div>
+                  <div class="timeline-title">World-Class Batting</div>
+                  <div class="timeline-text">
+                    He emerged as one of the most reliable run-scorers in world cricket across formats.
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-card">
+                  <div class="timeline-year">2016</div>
+                  <div class="timeline-title">Captaincy Era</div>
+                  <div class="timeline-text">
+                    Under his leadership, India gained more aggression, structure, and confidence in big tournaments.
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-card">
+                  <div class="timeline-year">2018</div>
+                  <div class="timeline-title">BGT 2018</div>
+                  <div class="timeline-text">
+                    A defining overseas performance that showcased his temperament, patience, and elite class.
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-card">
+                  <div class="timeline-year">2022</div>
+                  <div class="timeline-title">Modern Great</div>
+                  <div class="timeline-text">
+                    He continued producing iconic knocks and remained one of the leading run scorers globally.
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-card">
+                  <div class="timeline-year">2025</div>
+                  <div class="timeline-title">Legend Status</div>
+                  <div class="timeline-text">
+                    Still a major figure in international cricket, admired for fitness, consistency, and chasing ability.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -531,7 +649,7 @@
         <div class="container">
           <div class="section-header">
             <div>
-              <div class="section-kicker">Achievements</div>
+              <div class="kicker">Achievements</div>
               <h2>Records & Honors</h2>
             </div>
           </div>
@@ -541,26 +659,26 @@
               <h3>International Records</h3>
               <ul>
                 <li>Most ODI centuries by an Indian batter</li>
-                <li>Fastest to 8,000, 10,000, 12,000 ODI runs</li>
-                <li>Top run-scorer in numerous ICC tournaments</li>
+                <li>Fastest to 8,000 / 10,000 / 12,000 ODI runs</li>
+                <li>Dominant performer in major bilateral series</li>
               </ul>
             </div>
 
             <div class="record-card">
               <h3>Test Cricket</h3>
               <ul>
-                <li>Elite consistency in overseas conditions</li>
-                <li>Multiple match-winning hundreds in Australia</li>
-                <li>One of India’s greatest modern-day test batters</li>
+                <li>Elite overseas batting record</li>
+                <li>Several match-winning hundreds in Australia</li>
+                <li>One of India’s great modern Test batters</li>
               </ul>
             </div>
 
             <div class="record-card">
               <h3>IPL & Leadership</h3>
               <ul>
-                <li>Iconic run-scoring performances in the IPL</li>
-                <li>Played a central role in team leadership and batting pressure</li>
-                <li>One of the most followed and respected cricketers globally</li>
+                <li>Key run scorer in franchise cricket</li>
+                <li>One of the biggest figures in world cricket</li>
+                <li>Widely respected for fitness and discipline</li>
               </ul>
             </div>
           </div>
@@ -570,104 +688,8 @@
 
     <footer class="footer">
       <div class="container">
-        Virat Kohli — Career profile • Updated for a premium cricket showcase
+        Virat Kohli • Career profile • Stats overview • Timeline
       </div>
     </footer>
-
-    <script>
-      const stats = [
-        {
-          format: "Tests",
-          value: "8,848+",
-          matches: "113 matches",
-          avg: "Average 49.15",
-          runs: "Runs 8,848+"
-        },
-        {
-          format: "ODIs",
-          value: "13,848+",
-          matches: "295 matches",
-          avg: "Average 58.18",
-          runs: "Runs 13,848+"
-        },
-        {
-          format: "T20Is",
-          value: "4,188+",
-          matches: "125 matches",
-          avg: "Average 48.69",
-          runs: "Runs 4,188+"
-        },
-        {
-          format: "IPL",
-          value: "8,164+",
-          matches: "252 matches",
-          avg: "Average 38.67",
-          runs: "Runs 8,164+"
-        }
-      ];
-
-      const timeline = [
-        {
-          year: "2008",
-          title: "International Debut",
-          text: "Virat Kohli made his international debut and began a rise that would define a generation."
-        },
-        {
-          year: "2010",
-          title: "Breakthrough Years",
-          text: "His aggressive style and consistency made him a key figure in India’s batting line-up."
-        },
-        {
-          year: "2013",
-          title: "World-Class Batting",
-          text: "He emerged as one of the premier run-scorers across all formats with remarkable consistency."
-        },
-        {
-          year: "2016",
-          title: "Captaincy Era",
-          text: "Under his leadership, India became a stronger and more fearless unit in major tournaments."
-        },
-        {
-          year: "2018",
-          title: "BGT 2018 Masterclass",
-          text: "A defining overseas performance that highlighted his composure, temperament, and class."
-        },
-        {
-          year: "2022",
-          title: "Iconic Form",
-          text: "He produced some of his most memorable moments while maintaining elite run-scoring standards."
-        },
-        {
-          year: "2025",
-          title: "Modern Great",
-          text: "Still leading the conversation as one of cricket’s most complete and admired batsmen."
-        }
-      ];
-
-      const statsGrid = document.getElementById("statsGrid");
-      statsGrid.innerHTML = stats.map(stat => `
-        <article class="stat-card">
-          <div class="stat-format">${stat.format}</div>
-          <div class="stat-value">${stat.value}</div>
-          <div class="stat-meta">
-            <span>${stat.matches}</span>
-            <span>${stat.avg}</span>
-            <span>${stat.runs}</span>
-          </div>
-        </article>
-      `).join("");
-
-      const timelineGrid = document.getElementById("timelineGrid");
-      timelineGrid.innerHTML = timeline.map(item => `
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="timeline-year">${item.year}</div>
-            <div class="timeline-title">${item.title}</div>
-            <div class="timeline-text">${item.text}</div>
-          </div>
-        </div>
-      `).join("");
-    </script>
   </body>
 </html>
