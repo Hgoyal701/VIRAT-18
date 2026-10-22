@@ -1,313 +1,120 @@
-:root {
-  --bg: #0b1117;
-  --bg-soft: #121d2a;
-  --card: rgba(17, 28, 42, 0.9);
-  --card-2: rgba(22, 38, 55, 0.9);
-  --text: #edf4ff;
-  --muted: #a7b9d6;
-  --accent: #d91c26;
-  --accent-2: #f2c76e;
-  --shadow: rgba(0, 0, 0, 0.35);
-  --border: rgba(255, 255, 255, 0.08);
-}
+(function () {
+  'use strict';
 
-:root.light {
-  --bg: #f5f7fb;
-  --bg-soft: #edf3ff;
-  --card: #ffffff;
-  --card-2: #f4f8ff;
-  --text: #101a29;
-  --muted: #52657c;
-  --accent: #c00f1b;
-  --accent-2: #d7a831;
-  --shadow: rgba(24, 52, 86, 0.12);
-  --border: rgba(11, 23, 39, 0.08);
-}
+  const root = document.documentElement;
+  const THEME_KEY = 'vk_theme';
+  const themeToggle = document.getElementById('theme-toggle');
+  const navToggle = document.querySelector('.nav-toggle');
+  const mainNav = document.querySelector('.main-nav');
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const momentCards = document.querySelectorAll('.moment-card');
 
-* {
-  box-sizing: border-box;
-}
+  const safeStorage = {
+    get(key) {
+      try {
+        return window.localStorage.getItem(key);
+      } catch (error) {
+        return null;
+      }
+    },
+    set(key, value) {
+      try {
+        window.localStorage.setItem(key, value);
+      } catch (error) {
+        // Ignore storage failures in restricted browsers.
+      }
+    }
+  };
 
-html {
-  scroll-behavior: smooth;
-}
+  const applyTheme = (theme) => {
+    const isLight = theme === 'light';
+    root.classList.toggle('light', isLight);
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, var(--bg), var(--bg-soft));
-  color: var(--text);
-}
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(isLight));
+      themeToggle.textContent = isLight ? '🌙' : '☀️';
+      themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
+    }
+  };
 
-img {
-  max-width: 100%;
-  display: block;
-}
+  const getPreferredTheme = () => {
+    const storedTheme = safeStorage.get(THEME_KEY);
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme;
+    }
 
-button,
-a {
-  transition: all 0.2s ease;
-}
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      return 'light';
+    }
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 130px;
-  height: 100vh;
-  padding: 24px 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgba(10, 16, 27, 0.85);
-  border-right: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-}
+    return 'dark';
+  };
 
-.brand {
-  margin-bottom: 32px;
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: var(--accent);
-}
-
-.nav {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.nav a {
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.nav a.active,
-.nav a:hover {
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.theme-btn {
-  margin-top: auto;
-  padding: 10px;
-  border: none;
-  background: transparent;
-  color: var(--text);
-  font-size: 1.4rem;
-  cursor: pointer;
-}
-
-.content {
-  margin-left: 130px;
-  padding: 40px 28px;
-}
-
-.hero {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 28px;
-  align-items: center;
-  min-height: 80vh;
-}
-
-.eyebrow {
-  margin-bottom: 12px;
-  color: var(--accent-2);
-  letter-spacing: 3px;
-  font-size: 0.8rem;
-}
-
-.hero h1 {
-  margin: 0 0 18px;
-  font-size: clamp(3rem, 6vw, 6rem);
-  line-height: 0.95;
-}
-
-.hero-text p {
-  max-width: 560px;
-  color: var(--muted);
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
-
-.cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 24px;
-}
-
-.primary-btn,
-.secondary-btn {
-  display: inline-block;
-  padding: 14px 20px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.primary-btn {
-  background: linear-gradient(135deg, var(--accent), #ff5f6d);
-  color: white;
-  box-shadow: 0 12px 24px rgba(217, 28, 38, 0.35);
-}
-
-.secondary-btn {
-  color: var(--text);
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.player-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 22px 50px var(--shadow);
-}
-
-.player-card img {
-  width: 100%;
-  height: 520px;
-  object-fit: cover;
-  display: block;
-}
-
-.section {
-  padding: 56px 0;
-}
-
-.section h2 {
-  margin-bottom: 24px;
-  font-size: clamp(2rem, 4vw, 3rem);
-}
-
-.timeline {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 18px;
-}
-
-.timeline-item,
-.card,
-.stat-box,
-.format-table {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: 0 10px 28px var(--shadow);
-}
-
-.timeline-item {
-  padding: 18px;
-}
-
-.timeline-item span {
-  display: inline-block;
-  margin-bottom: 10px;
-  color: var(--accent-2);
-  font-weight: 800;
-}
-
-.timeline-item p,
-.card p,
-.stat-box label,
-td {
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.cards,
-.stats-grid,
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-}
-
-.card,
-.stat-box {
-  padding: 22px;
-}
-
-.num {
-  display: block;
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  color: var(--accent);
-}
-
-.format-table {
-  overflow: hidden;
-  margin-top: 28px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--card);
-}
-
-th,
-td {
-  padding: 16px 18px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-th {
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--text);
-}
-
-.gallery-grid img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  box-shadow: 0 12px 28px var(--shadow);
-}
-
-@media (max-width: 820px) {
-  .sidebar {
-    position: static;
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    gap: 16px;
-    padding: 18px 20px;
+  if (themeToggle) {
+    applyTheme(getPreferredTheme());
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = root.classList.contains('light') ? 'dark' : 'light';
+      applyTheme(nextTheme);
+      safeStorage.set(THEME_KEY, nextTheme);
+    });
   }
 
-  .nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+  if (navToggle && mainNav) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = mainNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    mainNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mainNav.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
   }
 
-  .content {
-    margin-left: 0;
-    padding: 18px 18px 50px;
+  if (filterButtons.length) {
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selected = button.dataset.filter || 'all';
+
+        filterButtons.forEach((btn) => {
+          const isActive = btn === button;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', String(isActive));
+        });
+
+        momentCards.forEach((card) => {
+          const categories = (card.dataset.category || '').split(' ');
+          const shouldShow = selected === 'all' || categories.includes(selected);
+          card.classList.toggle('is-hidden', !shouldShow);
+        });
+      });
+    });
   }
 
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
+  const navLinks = document.querySelectorAll('.main-nav a');
+  const sections = Array.from(document.querySelectorAll('main section[id]'));
 
-  .player-card img {
-    height: 340px;
-  }
+  if ('IntersectionObserver' in window && sections.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-  .cta-row {
-    flex-direction: column;
-    align-items: flex-start;
+          const id = entry.target.id;
+          navLinks.forEach((link) => {
+            const isActive = link.getAttribute('href') === `#${id}`;
+            link.classList.toggle('active', isActive);
+          });
+        });
+      },
+      {
+        rootMargin: '-35% 0px -45% 0px',
+        threshold: 0.2
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
   }
-}
+})();
