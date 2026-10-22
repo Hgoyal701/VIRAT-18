@@ -1,120 +1,44 @@
-(function () {
-  'use strict';
+.hero-shell {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 28px;
+  align-items: center;
+}
 
-  const root = document.documentElement;
-  const THEME_KEY = 'vk_theme';
-  const themeToggle = document.getElementById('theme-toggle');
-  const navToggle = document.querySelector('.nav-toggle');
-  const mainNav = document.querySelector('.main-nav');
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const momentCards = document.querySelectorAll('.moment-card');
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
 
-  const safeStorage = {
-    get(key) {
-      try {
-        return window.localStorage.getItem(key);
-      } catch (error) {
-        return null;
-      }
-    },
-    set(key, value) {
-      try {
-        window.localStorage.setItem(key, value);
-      } catch (error) {
-        // Ignore storage failures in restricted browsers.
-      }
-    }
-  };
+.filter-pill {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #e6edf7;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
 
-  const applyTheme = (theme) => {
-    const isLight = theme === 'light';
-    root.classList.toggle('light', isLight);
+.filter-pill.active,
+.filter-pill:hover {
+  background: linear-gradient(135deg, #d91c26, #ff5b62);
+  border-color: transparent;
+  transform: translateY(-1px);
+}
 
-    if (themeToggle) {
-      themeToggle.setAttribute('aria-pressed', String(isLight));
-      themeToggle.textContent = isLight ? '🌙' : '☀️';
-      themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
-    }
-  };
+.story-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 22px;
+  transition: 0.25s ease;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+}
 
-  const getPreferredTheme = () => {
-    const storedTheme = safeStorage.get(THEME_KEY);
-    if (storedTheme === 'light' || storedTheme === 'dark') {
-      return storedTheme;
-    }
-
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'light';
-    }
-
-    return 'dark';
-  };
-
-  if (themeToggle) {
-    applyTheme(getPreferredTheme());
-    themeToggle.addEventListener('click', () => {
-      const nextTheme = root.classList.contains('light') ? 'dark' : 'light';
-      applyTheme(nextTheme);
-      safeStorage.set(THEME_KEY, nextTheme);
-    });
-  }
-
-  if (navToggle && mainNav) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = mainNav.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    mainNav.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        mainNav.classList.remove('is-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-
-  if (filterButtons.length) {
-    filterButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const selected = button.dataset.filter || 'all';
-
-        filterButtons.forEach((btn) => {
-          const isActive = btn === button;
-          btn.classList.toggle('active', isActive);
-          btn.setAttribute('aria-pressed', String(isActive));
-        });
-
-        momentCards.forEach((card) => {
-          const categories = (card.dataset.category || '').split(' ');
-          const shouldShow = selected === 'all' || categories.includes(selected);
-          card.classList.toggle('is-hidden', !shouldShow);
-        });
-      });
-    });
-  }
-
-  const navLinks = document.querySelectorAll('.main-nav a');
-  const sections = Array.from(document.querySelectorAll('main section[id]'));
-
-  if ('IntersectionObserver' in window && sections.length > 0) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const id = entry.target.id;
-          navLinks.forEach((link) => {
-            const isActive = link.getAttribute('href') === `#${id}`;
-            link.classList.toggle('active', isActive);
-          });
-        });
-      },
-      {
-        rootMargin: '-35% 0px -45% 0px',
-        threshold: 0.2
-      }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-  }
-})();
+.story-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 50px rgba(0,0,0,0.22);
+}
